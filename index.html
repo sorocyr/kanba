@@ -148,18 +148,24 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 
 /* Hex input */
 .hex-input-container{
- display:flex;
- gap:8px;
- align-items:center;
+ position:relative;
  margin-bottom:14px;
 }
-.hex-input-container label{font-size:13px;color:var(--muted)}
+.hex-input-container label{
+ position:absolute;
+ left:12px;
+ top:50%;
+ transform:translateY(-50%);
+ font-size:13px;
+ color:var(--muted);
+ pointer-events:none;
+}
 .hex-input{
- flex:1;
+ width:100%;
  height:36px;
  border-radius:10px;
  border:1px solid rgba(0,0,0,0.08);
- padding:0 12px;
+ padding:0 12px 0 24px;
  font-family:monospace;
  font-size:13px;
 }
@@ -600,11 +606,9 @@ currentLightness=light;
 
 
 // Center the thumb properly so it's never cut off
-const thumbRadius = 11; // Half of 22px width
-const maxX = rect.width - thumbRadius;
-const maxY = rect.height - thumbRadius;
-const finalX = Math.max(thumbRadius, Math.min(maxX, clampedX));
-const finalY = Math.max(thumbRadius, Math.min(maxY, clampedY));
+const thumbRadius = 13; // Account for border + shadow
+const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, clampedX));
+const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, clampedY));
 
 colorThumb.style.left=finalX+'px';
 colorThumb.style.top=finalY+'px';
@@ -634,29 +638,33 @@ document.addEventListener('mouseup',()=>dragging=false);
 /* --- Show picker at existing color --- */
 function showColorPicker(cat,hex){
 currentCategory=cat;
-const {h,l}=hexToHsl(hex);
+const {h,s,l}=hexToHsl(hex);
 
+// Store current values
+currentHue=h;
+currentLightness=l;
 
-const rect=colorField.getBoundingClientRect();
-const x=(h/360)*rect.width;
-const y=(1 - l/100)*rect.height;
-
-// Center the thumb properly
-const thumbRadius = 11;
-const maxX = rect.width - thumbRadius;
-const maxY = rect.height - thumbRadius;
-const finalX = Math.max(thumbRadius, Math.min(maxX, x));
-const finalY = Math.max(thumbRadius, Math.min(maxY, y));
-
-colorThumb.style.left=finalX+'px';
-colorThumb.style.top=finalY+'px';
-
-
-updatePreviewFromHSL(h,l);
+// Wait for popup to be visible so we can get correct dimensions
 pickerPopup.classList.add('active');
 pickerBackdrop.classList.add('active');
-}
 
+// Small delay to ensure dimensions are correct
+setTimeout(()=>{
+ const rect=colorField.getBoundingClientRect();
+ const x=(h/360)*rect.width;
+ const y=(1 - l/100)*rect.height;
+
+ // Center the thumb properly
+ const thumbRadius = 13;
+ const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, x));
+ const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, y));
+
+ colorThumb.style.left=finalX+'px';
+ colorThumb.style.top=finalY+'px';
+
+ updatePreviewFromHSL(h,l);
+},10);
+}
 
 /* --- Hide picker --- */
 function hideColorPicker(){
@@ -678,11 +686,9 @@ if(v.length===6){
  const x=(h/360)*rect.width;
  const y=(1-l/100)*rect.height;
  
- const thumbRadius = 11;
- const maxX = rect.width - thumbRadius;
- const maxY = rect.height - thumbRadius;
- const finalX = Math.max(thumbRadius, Math.min(maxX, x));
- const finalY = Math.max(thumbRadius, Math.min(maxY, y));
+ const thumbRadius = 13;
+ const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, x));
+ const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, y));
  
  colorThumb.style.left=finalX+'px';
  colorThumb.style.top=finalY+'px';
