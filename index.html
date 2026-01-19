@@ -12,12 +12,14 @@
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--text);background:radial-gradient(1200px 800px at 20% -10%,rgba(255,255,255,0.8),transparent),radial-gradient(1000px 700px at 100% 20%,hsla(var(--design),0.25),transparent),radial-gradient(900px 600px at -10% 100%,hsla(var(--dev),0.25),transparent),var(--bg)}
 
-
 .app-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px clamp(16px,4vw,40px)}
 .app-header h1{margin:0;font-size:clamp(22px,3.2vw,32px);letter-spacing:-0.02em;font-weight:600}
 
+.analytics-button{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;cursor:pointer;padding:0}
+.analytics-button svg{width:24px;height:24px}
+.analytics-button rect{fill:var(--muted);transition:fill 200ms ease}
+.analytics-button:hover rect{fill:#9f9fa6}
 
-/* --- Legend chips --- */
 .legend{display:flex;gap:8px;flex-wrap:wrap}
 .chip{padding:6px 10px;border-radius:999px;background:#fff;box-shadow:var(--ring);font-size:12px;color:var(--muted);border:none}
 .cat-design{background:hsla(var(--design),0.22);color:#5d4bb3;box-shadow:0 0 0 1.5px hsla(var(--design),0.55) inset}
@@ -26,43 +28,40 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 .cat-bug{background:hsla(var(--bug),0.22);color:#9a2b2b;box-shadow:0 0 0 1.5px hsla(var(--bug),0.55) inset}
 .cat-chore{background:hsla(var(--chore),0.22);color:#1e5d8f;box-shadow:0 0 0 1.5px hsla(var(--chore),0.55) inset}
 
-
-/* --- Board layout --- */
 .board{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:18px;padding:0 clamp(16px,4vw,40px) 40px}
 .column{background:rgba(255,255,255,0.65);backdrop-filter:saturate(120%) blur(6px);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:flex;flex-direction:column;min-height:320px}
 .column header{padding:14px 14px 6px 14px}
 .column h2{margin:0;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
 
-
-/* --- Quick add --- */
-.quick-add{display:grid;grid-template-columns:1fr 110px 36px;gap:8px;padding:10px 14px 14px 14px;min-width:0}
-.quick-add input,.quick-add select,.quick-add button{font:inherit;font-size:15px;font-weight:400}
-.quick-add input{height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 12px;background:#fff;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.quick-add{display:grid;grid-template-columns:1fr minmax(90px,110px) 36px;gap:8px;padding:10px 14px 14px 14px;min-width:0}
+.quick-add input,.quick-add select,.quick-add button,.quick-add textarea{font:inherit;font-size:15px;font-weight:400}
+.quick-add textarea{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji"}
+.quick-add input{height:auto;min-height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:8px 12px;background:#fff;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease;box-shadow:0 1px 2px rgba(0,0,0,0.05);resize:none;overflow:hidden;line-height:1.4}
 .quick-add input:hover{border-color:rgba(0,0,0,0.15);box-shadow:0 2px 6px rgba(0,0,0,0.08)}
 .quick-add input:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:0 11px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-
 
 .quick-add .category-select{position:relative;height:36px}
 .quick-add .category-button{width:100%;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 32px 0 12px;background:#fff;cursor:pointer;text-align:left;font:inherit;position:relative;display:flex;align-items:center}
 .quick-add .category-button:hover{background-color:#fafafa}
 .quick-add .category-button::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--muted)}
 
-
-.quick-add .category-dropdown{position:absolute;top:40px;left:0;width:120px;background:#f8f8f8;border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;z-index:100;overflow:hidden;padding:8px 4px}
+.quick-add .category-dropdown{position:absolute;top:40px;left:0;width:100%;background:#f8f8f8;border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;z-index:100;overflow:hidden;padding:8px 4px}
 .quick-add .category-dropdown.open{display:block}
-.quick-add .category-option{padding:8px 12px;cursor:pointer;transition:color 200ms ease;border-radius:6px;margin:2px 0;background:transparent;color:var(--text)}
-
+.quick-add .category-option{padding:8px 12px;cursor:pointer;transition:all 200ms ease;border-radius:6px;margin:2px 0;background:transparent;color:var(--text);border:none;width:100%;text-align:left;font:inherit;font-size:15px}
+.quick-add .category-option:hover{background:rgba(0,0,0,0.08)}
+.quick-add .category-option[data-value="design"]:hover{background:hsla(var(--design),0.3);color:#5d4bb3}
+.quick-add .category-option[data-value="dev"]:hover{background:hsla(var(--dev),0.3);color:#287e6b}
+.quick-add .category-option[data-value="research"]:hover{background:hsla(var(--research),0.3);color:#8a6a00}
+.quick-add .category-option[data-value="bug"]:hover{background:hsla(var(--bug),0.3);color:#9a2b2b}
+.quick-add .category-option[data-value="chore"]:hover{background:hsla(var(--chore),0.3);color:#1e5d8f}
 
 .quick-add button{height:36px;min-width:36px;padding:0 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer;font-size:14px;transition:background 200ms ease,border-color 200ms ease}
 .quick-add button:hover{background:#f5f5f5}
 
-
-/* --- Cards --- */
 .cards{display:flex;flex-direction:column;gap:12px;padding:0 14px 16px 14px;min-height:100px}
-.card{background:var(--card);border-radius:16px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.06);padding:12px;cursor:grab;transition:transform 120ms ease,box-shadow 160ms ease,background 160ms ease;overflow:hidden}
+.card{background:var(--card);border-radius:16px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.06);padding:12px 12px 48px 12px;cursor:grab;transition:box-shadow 160ms ease,background 160ms ease;overflow:hidden;position:relative;min-height:80px}
 .card.dragging{opacity:0.8;transform:scale(1.02);box-shadow:0 15px 40px rgba(0,0,0,0.15)}
 .card:active{cursor:grabbing}
-
 
 .card.cat-design{background:hsla(var(--design),0.22);box-shadow:0 0 0 1px hsla(var(--design),0.55) inset,0 10px 30px hsla(var(--design),0.35)}
 .card.cat-dev{background:hsla(var(--dev),0.22);box-shadow:0 0 0 1px hsla(var(--dev),0.55) inset,0 10px 30px hsla(var(--dev),0.35)}
@@ -70,35 +69,38 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 .card.cat-bug{background:hsla(var(--bug),0.22);box-shadow:0 0 0 1px hsla(var(--bug),0.55) inset,0 10px 30px hsla(var(--bug),0.35)}
 .card.cat-chore{background:hsla(var(--chore),0.22);box-shadow:0 0 0 1px hsla(var(--chore),0.55) inset,0 10px 30px hsla(var(--chore),0.35)}
 
-
-.card-top{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:6px}
-.title{outline:none;line-height:1.35}
-.icon-button{border:none;background:transparent;color:var(--muted);padding:4px 6px;border-radius:8px;cursor:pointer}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.title{outline:none;line-height:1.35;flex:1;word-wrap:break-word;overflow-wrap:break-word;white-space:pre-wrap;max-height:none}
+.icon-button{border:none;background:transparent;color:var(--muted);padding:4px 6px;border-radius:8px;cursor:pointer;flex-shrink:0}
 .icon-button:hover{background:rgba(0,0,0,0.04)}
 .cards.drag-over{outline:none}
 
+.card-bottom{display:none;align-items:center;gap:8px;position:absolute;bottom:12px;left:12px;right:12px}
+.card:hover .card-bottom{display:flex}
+.card-bottom.has-description{display:flex}
+.card-bottom.has-timer{display:flex}
+.card-icon{width:18px;height:18px;padding:4px;border:none;background:transparent;cursor:pointer;border-radius:6px;transition:background 150ms ease}
+.card-icon:hover{background:rgba(0,0,0,0.06)}
+.card-icon svg{width:100%;height:100%;display:block}
 
-/* --- Legend + button --- */
+.inline-timer{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.5);cursor:pointer;margin-left:auto}
+.inline-timer:hover{background:rgba(255,255,255,0.7)}
+
 .legend-wrap{margin-left:auto;display:flex;align-items:center;gap:10px}
 .legend-plus{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(0,0,0,0.06);background:#fff;box-shadow:var(--ring);cursor:pointer;color:var(--muted);font-weight:600}
 .legend-plus:hover{background:#fafafa}
 
-
-/* ================= MODAL ================= */
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:9999}
 .modal{width:min(280px,92vw);background:#fff;border-radius:16px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.18);padding:18px}
 .modal h3{margin:4px 0 28px 0;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:center}
-
 
 .modal .color-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
 .modal .color-row{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .modal .category-name-input{width:100%;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 12px;background:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--muted);transition:all 200ms ease;outline:none;box-shadow:0 1px 2px rgba(0,0,0,0.05);font-size:15px;line-height:20px;margin:0;box-sizing:border-box;font-weight:400}
 .modal .category-name-input:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:0 11px;box-shadow:0 2px 6px rgba(0,0,0,0.1);color:var(--text)}
 
-
 .modal .color-preview{width:36px;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);cursor:pointer;flex-shrink:0;transition:transform 0.2s ease,box-shadow 0.2s ease}
 .modal .color-preview:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
-
 
 .modal-actions{display:flex;justify-content:center;gap:10px;margin-top:32px}
 .btn{height:40px;padding:0 24px;border-radius:14px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer;font-size:14px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:background 200ms ease,border-color 200ms ease}
@@ -106,145 +108,114 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 .btn.primary{background:#666;color:#fff;border-color:#666}
 .btn.primary:hover{background:#777}
 
+.description-modal{width:min(480px,92vw)}
+.description-view{padding:12px;line-height:1.6;color:var(--text);min-height:100px;max-height:300px;overflow-y:auto;white-space:pre-wrap;word-wrap:break-word}
+.description-edit{width:100%;min-height:150px;padding:12px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;font-family:inherit;font-size:15px;line-height:1.6;resize:vertical;outline:none}
+.description-edit:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:11px}
+.description-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.description-header h3{margin:0}
+.description-actions{display:flex;gap:8px}
+.edit-icon{width:24px;height:24px;padding:6px;cursor:pointer;border-radius:8px;transition:background 150ms}
+.edit-icon:hover{background:rgba(0,0,0,0.06)}
+.edit-icon svg{width:100%;height:100%;display:block;stroke-width:2.5}
 
-/* ============== NEW COLOR PICKER (2D FIELD) ============== */
-.picker-backdrop{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,0.2);
- z-index:10000;
- display:none
+.timer-modal{width:min(420px,92vw)}
+.timer-tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.timer-tab{flex:1;padding:10px;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);transition:all 200ms}
+.timer-tab.active{color:var(--text);border-bottom-color:var(--text)}
+.timer-tab:hover{background:rgba(0,0,0,0.02)}
+.timer-content{min-height:200px}
+.timer-presets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.preset-btn{height:48px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer;font-size:15px;font-weight:500;transition:all 200ms}
+.preset-btn:hover{background:#f5f5f5;transform:translateY(-1px)}
+.preset-btn.active{background:#666;color:#fff;border-color:#666}
+.custom-time{display:flex;gap:8px;align-items:center;margin-bottom:20px}
+.custom-time input{flex:1;height:40px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 12px;font-size:15px}
+.timer-display{text-align:center;font-size:48px;font-weight:600;margin:30px 0;letter-spacing:-0.02em}
+.timer-controls{display:flex;gap:10px;justify-content:center}
+.timer-btn{height:44px;padding:0 24px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer;font-size:14px;font-weight:500;transition:all 200ms}
+.timer-btn:hover{background:#f5f5f5}
+.timer-btn.primary{background:#666;color:#fff;border-color:#666}
+.timer-btn.primary:hover{background:#777}
+.accumulated-time{text-align:center;margin-top:20px;font-size:13px;color:var(--muted)}
+
+.analytics-modal{width:min(900px,95vw);max-height:90vh;overflow-y:auto}
+.analytics-modal h3{margin:4px 0 20px 0}
+.analytics-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.analytics-header h3{margin:0}
+.date-filter{display:flex;gap:8px}
+.filter-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer;font-size:13px;transition:all 200ms}
+.filter-btn:hover{background:#f5f5f5}
+.filter-btn.active{background:#666;color:#fff;border-color:#666}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+.stat-card{background:rgba(255,255,255,0.7);border-radius:14px;padding:20px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.stat-value{font-size:32px;font-weight:600;margin:8px 0 4px 0;letter-spacing:-0.02em}
+.stat-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+
+.charts-section{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.chart-container{background:rgba(255,255,255,0.7);border-radius:14px;padding:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.chart-title{font-size:14px;font-weight:500;margin-bottom:20px;color:var(--text);text-transform:uppercase;letter-spacing:0.08em}
+.pie-chart{width:100%;height:250px;display:flex;align-items:center;justify-content:center;position:relative}
+.pie-segment{cursor:pointer;transition:all 200ms ease,opacity 200ms ease}
+.pie-segment:hover{opacity:0.9}
+.pie-tooltip{position:absolute;background:rgba(255,255,255,0.95);color:var(--text);padding:12px 16px;border-radius:12px;font-size:14px;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity 200ms ease;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);backdrop-filter:blur(8px)}
+.pie-tooltip.show{opacity:1}
+.bar-chart{width:100%;height:250px}
+
+.bar-item{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bar-label{min-width:120px;font-size:14px;color:var(--text)}
+.bar-track{flex:1;height:32px;background:rgba(0,0,0,0.04);border-radius:8px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;font-size:12px;font-weight:600;color:#fff;transition:width 600ms ease}
+.bar-value{min-width:60px;text-align:right;font-size:14px;font-weight:500;color:var(--text)}
+
+.top-tasks{background:rgba(255,255,255,0.7);border-radius:14px;padding:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.task-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;margin-bottom:8px;background:rgba(0,0,0,0.02)}
+.task-item:last-child{margin-bottom:0}
+.task-name{font-size:14px;font-weight:500;flex:1}
+.task-time{font-size:13px;color:var(--muted);font-weight:500;min-width:70px;text-align:right}
+.task-category{padding:4px 8px;border-radius:6px;font-size:11px;margin-right:16px}
+
+@media (max-width:768px){
+  .charts-section{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
 }
+
+.picker-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:10000;display:none}
 .picker-backdrop.active{display:block}
 
-
-.color-picker-popup{
- position:fixed;
- top:50%;
- left:50%;
- transform:translate(-50%,-50%);
- background:#fff;
- border-radius:18px;
- padding:20px;
- box-shadow:0 20px 60px rgba(0,0,0,0.25);
- z-index:10001;
- display:none;
- width:320px;
-}
+.color-picker-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,0.25);z-index:10001;display:none;width:320px}
 .color-picker-popup.active{display:block}
 
+.color-preview-large{width:100%;height:70px;border-radius:16px;border:1px solid rgba(0,0,0,0.06);margin-bottom:14px;box-shadow:0 0 0 1px rgba(255,255,255,0.5) inset,0 10px 30px rgba(0,0,0,0.18)}
 
-/* Big preview (matches cards) */
-.color-preview-large{
- width:100%;
- height:70px;
- border-radius:16px;
- border:1px solid rgba(0,0,0,0.06);
- margin-bottom:14px;
- box-shadow:0 0 0 1px rgba(255,255,255,0.5) inset,
-            0 10px 30px rgba(0,0,0,0.18);
-}
+.hex-input-container{position:relative;margin-bottom:14px}
+.hex-input-container label{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);pointer-events:none}
+.hex-input{width:100%;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 12px 0 24px;font-family:monospace;font-size:13px}
 
+.color-field-wrapper{position:relative;width:100%;aspect-ratio:1/1;border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 12px rgba(0,0,0,0.08) inset;margin-bottom:16px;cursor:crosshair}
 
-/* Hex input */
-.hex-input-container{
- position:relative;
- margin-bottom:14px;
-}
-.hex-input-container label{
- position:absolute;
- left:12px;
- top:50%;
- transform:translateY(-50%);
- font-size:13px;
- color:var(--muted);
- pointer-events:none;
-}
-.hex-input{
- width:100%;
- height:36px;
- border-radius:10px;
- border:1px solid rgba(0,0,0,0.08);
- padding:0 12px 0 24px;
- font-family:monospace;
- font-size:13px;
-}
+.color-field{position:absolute;inset:0;background:linear-gradient(to right,hsl(0,100%,87%),hsl(60,100%,87%),hsl(120,100%,87%),hsl(180,100%,87%),hsl(240,100%,87%),hsl(300,100%,87%),hsl(360,100%,87%))}
 
+.color-field::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,0.6),rgba(255,255,255,0) 40%,rgba(80,80,100,0.45));mix-blend-mode:multiply}
 
-/* ---- THE COLOR FIELD (replaces sliders) ---- */
-.color-field-wrapper{
- position:relative;
- width:100%;
- aspect-ratio: 1 / 1;
- border-radius:16px;
- overflow:hidden;
- border:1px solid rgba(0,0,0,0.08);
- box-shadow:0 4px 12px rgba(0,0,0,0.08) inset;
- margin-bottom:16px;
- cursor:crosshair;
-}
+.color-thumb{position:absolute;width:22px;height:22px;border-radius:50%;border:2px solid #333;background:#fff;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,0.35)}
 
-
-/* Hue left → right - pastel version */
-.color-field{
- position:absolute;
- inset:0;
- background:
-   linear-gradient(to right,
-     hsl(0,100%,87%),
-     hsl(60,100%,87%),
-     hsl(120,100%,87%),
-     hsl(180,100%,87%),
-     hsl(240,100%,87%),
-     hsl(300,100%,87%),
-     hsl(360,100%,87%)
-   );
-}
-
-
-/* Lightness top → bottom - increased range */
-.color-field::after{
- content:"";
- position:absolute;
- inset:0;
- background:linear-gradient(to bottom, 
-   rgba(255,255,255,0.6), 
-   rgba(255,255,255,0) 40%,
-   rgba(80,80,100,0.45)
- );
- mix-blend-mode:multiply;
-}
-
-
-/* Soft thumb */
-.color-thumb{
- position:absolute;
- width:22px;
- height:22px;
- border-radius:50%;
- border:2px solid #333;
- background:#fff;
- transform:translate(-50%,-50%);
- pointer-events:none;
- box-shadow:0 2px 6px rgba(0,0,0,0.35);
-}
-
-
-/* Buttons */
-.picker-actions{
- display:flex;
- justify-content:center;
- gap:10px;
-}
-
+.picker-actions{display:flex;justify-content:center;gap:10px}
 
 @media (max-width:900px){.board{grid-template-columns:1fr}}
 </style>
 </head>
 
-
 <body>
 <header class="app-header">
+ <button class="analytics-button" id="open-analytics" title="Analytics">
+   <svg viewBox="0 0 24 24" fill="none">
+     <rect x="6" y="12" width="3" height="9" rx="1.5"/>
+     <rect x="11" y="8" width="3" height="13" rx="1.5"/>
+     <rect x="16" y="4" width="3" height="17" rx="1.5"/>
+   </svg>
+ </button>
  <div class="legend-wrap">
    <div class="legend">
      <span class="chip cat-design">Design</span>
@@ -257,12 +228,10 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
  </div>
 </header>
 
-
 <main class="board" id="board">
-<!-- Columns (unchanged structure) -->
 <section class="column" data-col="todo"><header><h2>To Do</h2></header>
 <form class="quick-add" data-target="todo">
-<input type="text" name="title" placeholder="Add a task…"/>
+<textarea name="title" placeholder="Add a task…" rows="1"></textarea>
 <div class="category-select">
  <button type="button" class="category-button"><span class="selected-category">Dev</span></button>
  <div class="category-dropdown">
@@ -278,10 +247,9 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 <div class="cards" data-list="todo"></div>
 </section>
 
-
 <section class="column" data-col="next"><header><h2>Do Next</h2></header>
 <form class="quick-add" data-target="next">
-<input type="text" name="title" placeholder="Add a task…"/>
+<textarea name="title" placeholder="Add a task…" rows="1"></textarea>
 <div class="category-select">
  <button type="button" class="category-button"><span class="selected-category">Dev</span></button>
  <div class="category-dropdown">
@@ -297,10 +265,9 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 <div class="cards" data-list="next"></div>
 </section>
 
-
 <section class="column" data-col="doing"><header><h2>Doing</h2></header>
 <form class="quick-add" data-target="doing">
-<input type="text" name="title" placeholder="Add a task…"/>
+<textarea name="title" placeholder="Add a task…" rows="1"></textarea>
 <div class="category-select">
  <button type="button" class="category-button"><span class="selected-category">Dev</span></button>
  <div class="category-dropdown">
@@ -316,10 +283,9 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 <div class="cards" data-list="doing"></div>
 </section>
 
-
 <section class="column" data-col="done"><header><h2>Done</h2></header>
 <form class="quick-add" data-target="done">
-<input type="text" name="title" placeholder="Add a task…"/>
+<textarea name="title" placeholder="Add a task…" rows="1"></textarea>
 <div class="category-select">
  <button type="button" class="category-button"><span class="selected-category">Dev</span></button>
  <div class="category-dropdown">
@@ -336,16 +302,35 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 </section>
 </main>
 
-
 <template id="card-template">
  <article class="card" draggable="true">
-   <div class="card-top"><button class="icon-button del">✕</button></div>
-   <div class="title" contenteditable="true" spellcheck="false"></div>
+   <div class="card-top">
+     <div class="title" contenteditable="true" spellcheck="false"></div>
+     <button class="icon-button del">✕</button>
+   </div>
+   <div class="card-bottom">
+     <button class="card-icon desc-icon" title="Description">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+         <polyline points="14 2 14 8 20 8"/>
+         <line x1="9" y1="13" x2="15" y2="13"/>
+         <line x1="9" y1="17" x2="15" y2="17"/>
+       </svg>
+     </button>
+     <button class="card-icon timer-icon" title="Timer">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+         <circle cx="12" cy="13" r="8"/>
+         <path d="M12 9v4l2 2"/>
+         <path d="M8 2h8"/>
+       </svg>
+     </button>
+     <div class="inline-timer" style="display:none">
+       <span class="timer-time">25:00</span>
+     </div>
+   </div>
  </article>
 </template>
 
-
-<!-- CATEGORY MODAL -->
 <div class="modal-backdrop" id="color-modal">
  <div class="modal">
    <h3>Customize Categories</h3>
@@ -363,65 +348,164 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
  </div>
 </div>
 
+<div class="modal-backdrop" id="description-modal">
+ <div class="modal description-modal">
+   <div class="description-header">
+     <h3>Task Description</h3>
+     <div class="description-actions">
+       <button class="edit-icon" id="edit-description-btn">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+         </svg>
+       </button>
+       <button class="icon-button" id="close-description">✕</button>
+     </div>
+   </div>
+   <div id="description-view" class="description-view"></div>
+   <textarea id="description-edit" class="description-edit" style="display:none" placeholder="Enter task description..."></textarea>
+   <div class="modal-actions" id="description-edit-actions" style="display:none;margin-top:16px">
+     <button class="btn" id="cancel-description">Cancel</button>
+     <button class="btn primary" id="save-description">Save</button>
+   </div>
+ </div>
+</div>
 
-<!-- NEW COLOR PICKER -->
+<div class="modal-backdrop" id="timer-modal">
+ <div class="modal timer-modal">
+   <div class="timer-tabs">
+     <button class="timer-tab active" data-tab="pomodoro">Pomodoro</button>
+     <button class="timer-tab" data-tab="stopwatch">Stopwatch</button>
+   </div>
+   
+   <div class="timer-content" id="pomodoro-content">
+     <div class="timer-presets">
+       <button class="preset-btn" data-minutes="25">25 min</button>
+       <button class="preset-btn" data-minutes="30">30 min</button>
+       <button class="preset-btn" data-minutes="50">50 min</button>
+       <button class="preset-btn" data-minutes="60">1 hour</button>
+     </div>
+     <div class="custom-time">
+       <input type="number" id="custom-minutes" placeholder="Custom minutes" min="1"/>
+       <button class="btn" id="set-custom">Set</button>
+     </div>
+     <div class="timer-display" id="timer-display">25:00</div>
+     <div class="timer-controls">
+       <button class="timer-btn primary" id="start-timer">Start</button>
+       <button class="timer-btn" id="pause-timer" style="display:none">Pause</button>
+       <button class="timer-btn" id="reset-timer">Reset</button>
+     </div>
+     <div class="accumulated-time" id="accumulated-time">Total: 0h 0m</div>
+   </div>
+   
+   <div class="timer-content" id="stopwatch-content" style="display:none">
+     <div class="timer-display" id="stopwatch-display">00:00</div>
+     <div class="timer-controls">
+       <button class="timer-btn primary" id="start-stopwatch">Start</button>
+       <button class="timer-btn" id="pause-stopwatch" style="display:none">Pause</button>
+       <button class="timer-btn" id="reset-stopwatch">Reset</button>
+     </div>
+     <div class="accumulated-time" id="stopwatch-accumulated">Total: 0h 0m</div>
+   </div>
+   
+   <div class="modal-actions" style="margin-top:20px">
+     <button class="btn" id="close-timer">Close</button>
+   </div>
+ </div>
+</div>
+
+<div class="modal-backdrop" id="analytics-modal">
+ <div class="modal analytics-modal">
+   <div class="analytics-header">
+     <h3>Analytics</h3>
+     <div class="date-filter">
+       <button class="filter-btn active" data-range="7">7 Days</button>
+       <button class="filter-btn" data-range="30">30 Days</button>
+       <button class="filter-btn" data-range="all">All Time</button>
+     </div>
+     <button class="icon-button" id="close-analytics">✕</button>
+   </div>
+   
+   <div class="stats-grid">
+     <div class="stat-card">
+       <div class="stat-label">Total Time</div>
+       <div class="stat-value" id="stat-total-time">0h 0m</div>
+     </div>
+     <div class="stat-card">
+       <div class="stat-label">Tasks Completed</div>
+       <div class="stat-value" id="stat-completed">0</div>
+     </div>
+     <div class="stat-card">
+       <div class="stat-label">Tasks Created</div>
+       <div class="stat-value" id="stat-created">0</div>
+     </div>
+     <div class="stat-card">
+       <div class="stat-label">Completion Rate</div>
+       <div class="stat-value" id="stat-rate">0%</div>
+     </div>
+   </div>
+   
+   <div class="charts-section">
+     <div class="chart-container">
+       <div class="chart-title">Time by Category</div>
+       <div class="pie-chart" id="category-pie"></div>
+     </div>
+     <div class="chart-container">
+       <div class="chart-title">Category Distribution</div>
+       <div class="bar-chart" id="category-bars"></div>
+     </div>
+   </div>
+   
+   <div class="top-tasks">
+     <div class="chart-title">Top Tasks by Time</div>
+     <div id="top-tasks-list"></div>
+   </div>
+ </div>
+</div>
+
 <div class="picker-backdrop" id="picker-backdrop"></div>
-
 
 <div class="color-picker-popup" id="color-picker-popup">
  <div class="color-preview-large" id="color-preview-large"></div>
-
-
  <div class="hex-input-container">
    <label>#</label>
    <input type="text" class="hex-input" id="hex-input" maxlength="6" placeholder="FFFFFF">
  </div>
-
-
  <div class="color-field-wrapper" id="color-field-wrapper">
    <div class="color-field" id="color-field"></div>
    <div class="color-thumb" id="color-thumb"></div>
  </div>
-
-
  <div class="picker-actions">
    <button class="btn" id="picker-cancel">Cancel</button>
    <button class="btn primary" id="picker-save">Save</button>
  </div>
 </div>
 
-
 <script>
-/* ===================== STATE & RENDER (UNCHANGED LOGIC) ===================== */
-const K='flowboard:v1',
-dCat=[
-{id:'design',name:'Design',color:'#e6d5ff'},
-{id:'dev',name:'Dev',color:'#b3f5e8'},
-{id:'research',name:'Research',color:'#fff4b3'},
-{id:'bug',name:'Bug',color:'#ffc7c7'},
-{id:'chore',name:'Chore',color:'#b3e5ff'}
-];
-
-
-function load(){try{const r=localStorage.getItem(K);return r?JSON.parse(r):null}catch(e){return null}}
-const state=load()||{columns:{todo:[],next:[],doing:[],done:[]},colors:null,categories:dCat},
-board=document.getElementById('board'),
-tpl=document.getElementById('card-template');
-
-
+const K='flowboard:v1',dCat=[{id:'design',name:'Design',color:'#e6d5ff'},{id:'dev',name:'Dev',color:'#b3f5e8'},{id:'research',name:'Research',color:'#fff4b3'},{id:'bug',name:'Bug',color:'#ffc7c7'},{id:'chore',name:'Chore',color:'#b3e5ff'}];
+function load(){
+  try{
+    const r=localStorage.getItem(K);
+    if(!r) return null;
+    const parsed=JSON.parse(r);
+    // Ensure all required properties exist
+    if(!parsed.columns) return null;
+    if(!parsed.columns.todo) parsed.columns.todo=[];
+    if(!parsed.columns.next) parsed.columns.next=[];
+    if(!parsed.columns.doing) parsed.columns.doing=[];
+    if(!parsed.columns.done) parsed.columns.done=[];
+    if(!parsed.descriptions) parsed.descriptions={};
+    if(!parsed.timers) parsed.timers={};
+    return parsed;
+  }catch(e){
+    console.error('Load error:',e);
+    return null;
+  }
+}
+const state=load()||{columns:{todo:[],next:[],doing:[],done:[]},colors:null,categories:dCat,descriptions:{},timers:{}},board=document.getElementById('board'),tpl=document.getElementById('card-template');
+let activeTimer=null,timerInterval=null;
 function save(){localStorage.setItem(K,JSON.stringify(state))}
 function uid(){return Math.random().toString(36).slice(2,9)}
-
-
-function render(){
-['todo','next','doing','done'].forEach(c=>{
- const l=board.querySelector(`[data-list="${c}"]`);
- l.innerHTML='';
- state.columns[c].forEach(card=>l.appendChild(renderCard(card)));
-});
-}
-
-
+function render(){['todo','next','doing','done'].forEach(c=>{const l=board.querySelector(`[data-list="${c}"]`);l.innerHTML='';state.columns[c].forEach(card=>l.appendChild(renderCard(card)))})}
 function renderCard(c){
 const n=tpl.content.firstElementChild.cloneNode(true);
 n.dataset.id=c.id;
@@ -430,330 +514,505 @@ const t=n.querySelector('.title');
 t.textContent=c.title;
 t.addEventListener('input',()=>updateCard(c.id,{title:t.textContent.trim()}));
 n.querySelector('.del').addEventListener('click',()=>removeCard(c.id));
+
+const descIcon=n.querySelector('.desc-icon');
+const timerIcon=n.querySelector('.timer-icon');
+const cardBottom=n.querySelector('.card-bottom');
+
+// Check if this card has a description
+const hasDescription=!!state.descriptions[c.id];
+
+// Check if this card has the active timer
+const hasActiveTimer=activeTimer&&activeTimer.cardId===c.id;
+
+// Only show description icon if there's a description
+if(hasDescription){
+  cardBottom.classList.add('has-description');
+  descIcon.style.display='block';
+} else {
+  descIcon.style.display='none';
+  // Show on hover regardless of timer
+  n.addEventListener('mouseenter',()=>{
+    descIcon.style.display='block';
+  });
+  n.addEventListener('mouseleave',()=>{
+    if(!hasDescription){
+      descIcon.style.display='none';
+    }
+  });
+}
+
+// Only show timer icon if this card has the active timer, or on hover when no timer is running
+if(hasActiveTimer){
+  cardBottom.classList.add('has-timer');
+  timerIcon.style.display='none'; // Hide icon when timer is active, inline timer shows instead
+} else {
+  timerIcon.style.display='none';
+  // Show on hover only if no timer is active anywhere
+  n.addEventListener('mouseenter',()=>{
+    if(!activeTimer){
+      timerIcon.style.display='block';
+    }
+  });
+  n.addEventListener('mouseleave',()=>{
+    if(!hasActiveTimer){
+      timerIcon.style.display='none';
+    }
+  });
+}
+
+descIcon.addEventListener('click',e=>{
+  e.stopPropagation();
+  openDescriptionModal(c.id);
+});
+
+timerIcon.addEventListener('click',e=>{
+  e.stopPropagation();
+  openTimerModal(c.id);
+});
+
+const inlineTimer=n.querySelector('.inline-timer');
+if(activeTimer&&activeTimer.cardId===c.id){
+  inlineTimer.style.display='inline-flex';
+  updateInlineTimer(n);
+}
+inlineTimer.addEventListener('click',e=>{
+  e.stopPropagation();
+  openTimerModal(c.id);
+});
+
 n.addEventListener('dragstart',e=>onDragStart(e,c.id));
 n.addEventListener('dragend',onDragEnd);
 return n;
 }
-
-
 function addCard(col,title,cat){
-const t=(title||'').trim();
-if(!t)return;
-state.columns[col].push({id:uid(),title:t,category:cat});
-save();render();
+  const t=(title||'').trim();
+  if(!t)return;
+  const newCard={id:uid(),title:t,category:cat,createdAt:Date.now()};
+  state.columns[col].push(newCard);
+  logHistory('created',newCard.id,col,cat);
+  save();
+  render();
+}
+function updateCard(id,p){for(const c of['todo','next','doing','done']){const i=state.columns[c].findIndex(x=>x.id===id);if(i!==-1){state.columns[c][i]={...state.columns[c][i],...p};save();return}}}
+function removeCard(id){for(const c of['todo','next','doing','done']){const b=state.columns[c].length;state.columns[c]=state.columns[c].filter(x=>x.id!==id);if(state.columns[c].length!==b)break}save();render()}
+function moveCard(id,to,idx){
+  let card=null,from=null;
+  for(const c of['todo','next','doing','done']){
+    const i=state.columns[c].findIndex(x=>x.id===id);
+    if(i!==-1){
+      card=state.columns[c][i];
+      from=c;
+      state.columns[c].splice(i,1);
+      break;
+    }
+  }
+  if(card){
+    state.columns[to].splice(idx,0,card);
+    if(from!==to){
+      logHistory('moved',card.id,to,card.category,from);
+      if(to==='done'){
+        logHistory('completed',card.id,to,card.category);
+      }
+    }
+    save();
+    render();
+  }
 }
 
-
-function updateCard(id,p){
-for(const c of['todo','next','doing','done']){
- const i=state.columns[c].findIndex(x=>x.id===id);
- if(i!==-1){state.columns[c][i]={...state.columns[c][i],...p};save();return}
+function logHistory(action,cardId,column,category,fromColumn=null){
+  if(!state.history)state.history=[];
+  state.history.push({
+    action,
+    cardId,
+    column,
+    category,
+    fromColumn,
+    timestamp:Date.now()
+  });
 }
-}
-
-
-function removeCard(id){
-for(const c of['todo','next','doing','done']){
- const b=state.columns[c].length;
- state.columns[c]=state.columns[c].filter(x=>x.id!==id);
- if(state.columns[c].length!==b)break;
-}
-save();render();
-}
-
-
-/* --- Drag & drop (unchanged) --- */
-let dragData=null;
-function onDragStart(e,id){
-const c=e.target;
-e.dataTransfer.effectAllowed='move';
-e.dataTransfer.setData('text/plain',id);
-dragData={id,startCol:c.closest('.column').dataset.col,card:c};
-setTimeout(()=>c.style.opacity='0',0);
-c.classList.add('dragging');
-}
-function onDragEnd(){
-if(dragData&&dragData.card){
- dragData.card.style.opacity='';
- dragData.card.classList.remove('dragging');
-}
-dragData=null;
-document.querySelectorAll('.drag-over').forEach(e=>e.classList.remove('drag-over'));
-}
-document.querySelectorAll('.column').forEach(col=>{
-col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over')});
-col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
-col.addEventListener('drop',e=>{
- e.preventDefault();e.stopPropagation();
- col.classList.remove('drag-over');
- const l=col.querySelector('.cards'),
- to=l.dataset.list,
- id=e.dataTransfer.getData('text/plain')||(dragData&&dragData.id);
- if(id)moveCard(id,to,state.columns[to].length);
+let dragData=null;function onDragStart(e,id){const c=e.target;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);dragData={id,startCol:c.closest('.column').dataset.col,card:c};setTimeout(()=>c.style.opacity='0',0);c.classList.add('dragging')}
+function onDragEnd(){if(dragData&&dragData.card){dragData.card.style.opacity='';dragData.card.classList.remove('dragging')}dragData=null;document.querySelectorAll('.drag-over').forEach(e=>e.classList.remove('drag-over'))}
+document.querySelectorAll('.column').forEach(col=>{col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over')});col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));col.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();col.classList.remove('drag-over');const l=col.querySelector('.cards'),to=l.dataset.list,id=e.dataTransfer.getData('text/plain')||(dragData&&dragData.id);if(id)moveCard(id,to,state.columns[to].length)})});
+document.querySelectorAll('.quick-add').forEach(f=>{
+  const btn=f.querySelector('.category-button');
+  const textarea=f.querySelector('textarea[name="title"]');
+  
+  if(!btn.dataset.selectedCategory){
+    btn.dataset.selectedCategory='dev';
+  }
+  
+  // Auto-expand textarea
+  textarea.addEventListener('input',()=>{
+    textarea.style.height='auto';
+    textarea.style.height=textarea.scrollHeight+'px';
+  });
+  
+  // Reset height on form submit
+  f.addEventListener('submit',e=>{
+    e.preventDefault();
+    const t=textarea.value;
+    const cat=f.querySelector('.category-button').dataset.selectedCategory||'dev';
+    const col=f.dataset.target;
+    console.log('Adding card:',{col,title:t,cat});
+    addCard(col,t,cat);
+    textarea.value='';
+    textarea.style.height='auto';
+  });
 });
-});
-
-
-/* --- Category dropdown --- */
-document.querySelectorAll('.category-button').forEach(b=>{
-const d=b.nextElementSibling;
-b.addEventListener('click',e=>{
- e.stopPropagation();
- document.querySelectorAll('.category-dropdown').forEach(x=>{if(x!==d)x.classList.remove('open')});
- d.classList.toggle('open');
-});
-d.querySelectorAll('.category-option').forEach(o=>o.addEventListener('click',e=>{
- e.stopPropagation();
- b.querySelector('.selected-category').textContent=o.textContent;
- b.dataset.selectedCategory=o.dataset.value;
- d.classList.remove('open');
-}));
-});
+document.querySelectorAll('.category-button').forEach(b=>{const d=b.nextElementSibling;b.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.category-dropdown').forEach(x=>{if(x!==d)x.classList.remove('open')});d.classList.toggle('open')});d.querySelectorAll('.category-option').forEach(o=>o.addEventListener('click',e=>{e.stopPropagation();b.querySelector('.selected-category').textContent=o.textContent;b.dataset.selectedCategory=o.dataset.value;d.classList.remove('open')}))});
 document.addEventListener('click',()=>document.querySelectorAll('.category-dropdown').forEach(d=>d.classList.remove('open')));
-
-
-/* ===================== COLOR UTILS ===================== */
 function getCSSVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
 function setCSSVar(n,v){document.documentElement.style.setProperty(n,v)}
-
-
-function hslToHex(h,s,l){
-s/=100;l/=100;
-const k=n=>(n+h/30)%12,
-a=s*Math.min(l,1-l),
-f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))),
-toHex=x=>Math.round(255*x).toString(16).padStart(2,'0');
-return`#${toHex(f(0))}${toHex(f(8))}${toHex(f(4))}`;
-}
-
-
-function hexToHsl(hex){
-let r=0,g=0,b=0;
-hex=hex.replace('#','');
-if(hex.length===3){
- r=parseInt(hex[0]+hex[0],16);
- g=parseInt(hex[1]+hex[1],16);
- b=parseInt(hex[2]+hex[2],16);
-} else{
- r=parseInt(hex.substring(0,2),16);
- g=parseInt(hex.substring(2,4),16);
- b=parseInt(hex.substring(4,6),16);
-}
-r/=255;g/=255;b/=255;
-const max=Math.max(r,g,b),min=Math.min(r,g,b);
-let h,s,l=(max+min)/2;
-if(max===min){h=0;s=0}
-else{
- const d=max-min;
- s=l>0.5?d/(2-max-min):d/(max+min);
- switch(max){
-  case r:h=(g-b)/d+(g<b?6:0);break;
-  case g:h=(b-r)/d+2;break;
-  case b:h=(r-g)/d+4;break;
- }
- h*=60;
-}
-return{h:Math.round(h),s:Math.round(s*100),l:Math.round(l*100)};
-}
-
-
-/* ===================== NEW 2D PICKER LOGIC ===================== */
-const pickerPopup=document.getElementById('color-picker-popup'),
-pickerBackdrop=document.getElementById('picker-backdrop'),
-colorField=document.getElementById('color-field-wrapper'),
-colorThumb=document.getElementById('color-thumb'),
-hexInput=document.getElementById('hex-input'),
-colorPreviewLarge=document.getElementById('color-preview-large'),
-pickerCancel=document.getElementById('picker-cancel'),
-pickerSave=document.getElementById('picker-save');
-
-
-let currentCategory=null;
-let currentHue=0;
-let currentLightness=80;
-let dragging=false;
-
-
-function updatePreviewFromHSL(h,l){
-const hex=hslToHex(h,70,l);
-hexInput.value=hex.replace('#','').toUpperCase();
-
-
-const {h:hh,s, l:ll}=hexToHsl(hex);
-colorPreviewLarge.style.background=`hsla(${hh},${s}%,${ll}%,0.22)`;
-colorPreviewLarge.style.boxShadow=
-   `0 0 0 1px hsla(${hh},${s}%,${ll}%,0.55) inset,`+
-   `0 10px 30px hsla(${hh},${s}%,${ll}%,0.35)`;
-
-
-if(currentCategory) tempColors[currentCategory]=hex;
-}
-
-
-/* Move thumb and update color */
-function setFromPosition(x,y){
-const rect=colorField.getBoundingClientRect();
-const clampedX=Math.max(0,Math.min(rect.width,x));
-const clampedY=Math.max(0,Math.min(rect.height,y));
-
-
-const hue=Math.round((clampedX/rect.width)*360);
-const light=Math.round((1 - clampedY/rect.height)*100);
-
-
-currentHue=hue;
-currentLightness=light;
-
-
-// Center the thumb properly so it's never cut off
-const thumbRadius = 13; // Account for border + shadow
-const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, clampedX));
-const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, clampedY));
-
-colorThumb.style.left=finalX+'px';
-colorThumb.style.top=finalY+'px';
-
-
-updatePreviewFromHSL(hue,light);
-}
-
-
-colorField.addEventListener('mousedown',e=>{
-dragging=true;
-const rect=colorField.getBoundingClientRect();
-setFromPosition(e.clientX-rect.left, e.clientY-rect.top);
-});
-
-
-document.addEventListener('mousemove',e=>{
-if(!dragging) return;
-const rect=colorField.getBoundingClientRect();
-setFromPosition(e.clientX-rect.left, e.clientY-rect.top);
-});
-
-
+function hslToHex(h,s,l){s/=100;l/=100;const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))),toHex=x=>Math.round(255*x).toString(16).padStart(2,'0');return`#${toHex(f(0))}${toHex(f(8))}${toHex(f(4))}`}
+function hexToHsl(hex){let r=0,g=0,b=0;hex=hex.replace('#','');if(hex.length===3){r=parseInt(hex[0]+hex[0],16);g=parseInt(hex[1]+hex[1],16);b=parseInt(hex[2]+hex[2],16)}else{r=parseInt(hex.substring(0,2),16);g=parseInt(hex.substring(2,4),16);b=parseInt(hex.substring(4,6),16)}r/=255;g/=255;b/=255;const max=Math.max(r,g,b),min=Math.min(r,g,b);let h,s,l=(max+min)/2;if(max===min){h=0;s=0}else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);switch(max){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;case b:h=(r-g)/d+4;break}h*=60}return{h:Math.round(h),s:Math.round(s*100),l:Math.round(l*100)}}
+const pickerPopup=document.getElementById('color-picker-popup'),pickerBackdrop=document.getElementById('picker-backdrop'),colorField=document.getElementById('color-field-wrapper'),colorThumb=document.getElementById('color-thumb'),hexInput=document.getElementById('hex-input'),colorPreviewLarge=document.getElementById('color-preview-large'),pickerCancel=document.getElementById('picker-cancel'),pickerSave=document.getElementById('picker-save');
+let currentCategory=null,currentHue=0,currentLightness=80,dragging=false,tempColors={},tempNames={};
+function updatePreviewFromHSL(h,l){const hex=hslToHex(h,70,l);hexInput.value=hex.replace('#','').toUpperCase();const{h:hh,s,l:ll}=hexToHsl(hex);colorPreviewLarge.style.background=`hsla(${hh},${s}%,${ll}%,0.22)`;colorPreviewLarge.style.boxShadow=`0 0 0 1px hsla(${hh},${s}%,${ll}%,0.55) inset,0 10px 30px hsla(${hh},${s}%,${ll}%,0.35)`;if(currentCategory)tempColors[currentCategory]=hex}
+function setFromPosition(x,y){const rect=colorField.getBoundingClientRect(),clampedX=Math.max(0,Math.min(rect.width,x)),clampedY=Math.max(0,Math.min(rect.height,y)),hue=Math.round((clampedX/rect.width)*360),light=Math.round((1-clampedY/rect.height)*100);currentHue=hue;currentLightness=light;const thumbRadius=13,finalX=Math.max(thumbRadius,Math.min(rect.width-thumbRadius,clampedX)),finalY=Math.max(thumbRadius,Math.min(rect.height-thumbRadius,clampedY));colorThumb.style.left=finalX+'px';colorThumb.style.top=finalY+'px';updatePreviewFromHSL(hue,light)}
+colorField.addEventListener('mousedown',e=>{dragging=true;const rect=colorField.getBoundingClientRect();setFromPosition(e.clientX-rect.left,e.clientY-rect.top)});
+document.addEventListener('mousemove',e=>{if(!dragging)return;const rect=colorField.getBoundingClientRect();setFromPosition(e.clientX-rect.left,e.clientY-rect.top)});
 document.addEventListener('mouseup',()=>dragging=false);
+function showColorPicker(cat,hex){currentCategory=cat;const{h,s,l}=hexToHsl(hex);currentHue=h;currentLightness=l;pickerPopup.classList.add('active');pickerBackdrop.classList.add('active');setTimeout(()=>{const rect=colorField.getBoundingClientRect(),x=(h/360)*rect.width,y=(1-l/100)*rect.height,thumbRadius=13,finalX=Math.max(thumbRadius,Math.min(rect.width-thumbRadius,x)),finalY=Math.max(thumbRadius,Math.min(rect.height-thumbRadius,y));colorThumb.style.left=finalX+'px';colorThumb.style.top=finalY+'px';updatePreviewFromHSL(h,l)},10)}
+function hideColorPicker(){pickerPopup.classList.remove('active');pickerBackdrop.classList.remove('active');currentCategory=null}
+hexInput.addEventListener('input',e=>{let v=e.target.value.replace(/[^0-9a-fA-F]/g,'').toUpperCase();if(v.length>6)v=v.slice(0,6);e.target.value=v;if(v.length===6){const hex='#'+v,{h,l}=hexToHsl(hex),rect=colorField.getBoundingClientRect(),x=(h/360)*rect.width,y=(1-l/100)*rect.height,thumbRadius=13,finalX=Math.max(thumbRadius,Math.min(rect.width-thumbRadius,x)),finalY=Math.max(thumbRadius,Math.min(rect.height-thumbRadius,y));colorThumb.style.left=finalX+'px';colorThumb.style.top=finalY+'px';updatePreviewFromHSL(h,l)}});
+pickerCancel.addEventListener('click',hideColorPicker);pickerSave.addEventListener('click',hideColorPicker);pickerBackdrop.addEventListener('click',hideColorPicker);
+document.querySelectorAll('.color-preview').forEach(p=>p.addEventListener('click',()=>{const cat=p.dataset.category,v=getCSSVar(`--${cat}`),m=v.match(/\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%/);if(m)showColorPicker(cat,hslToHex(+m[1],+m[2],+m[3]))}));
+const modal=document.getElementById('color-modal'),openBtn=document.getElementById('open-colors'),saveBtn=document.getElementById('save-colors'),cancelBtn=document.getElementById('cancel-colors');
+function showModal(s){modal.style.display=s?'flex':'none';if(s){tempColors={};tempNames={}}}
+openBtn.addEventListener('click',()=>showModal(true));cancelBtn.addEventListener('click',()=>{showModal(false);hideColorPicker()});modal.addEventListener('click',e=>{if(e.target===modal){showModal(false);hideColorPicker()}});
+saveBtn.addEventListener('click',()=>{state.colors=state.colors||{};for(const k of Object.keys(tempColors)){const hex=tempColors[k];state.colors[k]=hex;const{h,s,l}=hexToHsl(hex);setCSSVar(`--${k}`,`${h}, ${s}%, ${l}%`)}save();showModal(false);hideColorPicker();render()});
 
+const descModal=document.getElementById('description-modal'),descView=document.getElementById('description-view'),descEdit=document.getElementById('description-edit'),editDescBtn=document.getElementById('edit-description-btn'),closeDescBtn=document.getElementById('close-description'),saveDescBtn=document.getElementById('save-description'),cancelDescBtn=document.getElementById('cancel-description'),descEditActions=document.getElementById('description-edit-actions');
+let currentDescCardId=null;
+function openDescriptionModal(cardId){currentDescCardId=cardId;const desc=state.descriptions[cardId]||'';descView.textContent=desc||'No description yet. Click the pencil to add one.';descEdit.value=desc;descView.style.display='block';descEdit.style.display='none';descEditActions.style.display='none';editDescBtn.style.display='block';descModal.style.display='flex'}
+editDescBtn.addEventListener('click',()=>{descView.style.display='none';descEdit.style.display='block';descEditActions.style.display='flex';editDescBtn.style.display='none';descEdit.focus()});
+saveDescBtn.addEventListener('click',()=>{const text=descEdit.value.trim();if(text){state.descriptions[currentDescCardId]=text}else{delete state.descriptions[currentDescCardId]}save();render();descModal.style.display='none'});
+cancelDescBtn.addEventListener('click',()=>{descView.style.display='block';descEdit.style.display='none';descEditActions.style.display='none';editDescBtn.style.display='block'});
+closeDescBtn.addEventListener('click',()=>{descModal.style.display='none'});
+descModal.addEventListener('click',e=>{if(e.target===descModal)descModal.style.display='none'});
 
-/* --- Show picker at existing color --- */
-function showColorPicker(cat,hex){
-currentCategory=cat;
-const {h,s,l}=hexToHsl(hex);
-
-// Store current values
-currentHue=h;
-currentLightness=l;
-
-// Wait for popup to be visible so we can get correct dimensions
-pickerPopup.classList.add('active');
-pickerBackdrop.classList.add('active');
-
-// Small delay to ensure dimensions are correct
-setTimeout(()=>{
- const rect=colorField.getBoundingClientRect();
- const x=(h/360)*rect.width;
- const y=(1 - l/100)*rect.height;
-
- // Center the thumb properly
- const thumbRadius = 13;
- const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, x));
- const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, y));
-
- colorThumb.style.left=finalX+'px';
- colorThumb.style.top=finalY+'px';
-
- updatePreviewFromHSL(h,l);
-},10);
+const timerModal=document.getElementById('timer-modal'),timerTabs=document.querySelectorAll('.timer-tab'),pomodoroContent=document.getElementById('pomodoro-content'),stopwatchContent=document.getElementById('stopwatch-content'),timerDisplay=document.getElementById('timer-display'),stopwatchDisplay=document.getElementById('stopwatch-display'),presetBtns=document.querySelectorAll('.preset-btn'),customMinutes=document.getElementById('custom-minutes'),setCustomBtn=document.getElementById('set-custom'),startTimerBtn=document.getElementById('start-timer'),pauseTimerBtn=document.getElementById('pause-timer'),resetTimerBtn=document.getElementById('reset-timer'),startStopwatchBtn=document.getElementById('start-stopwatch'),pauseStopwatchBtn=document.getElementById('pause-stopwatch'),resetStopwatchBtn=document.getElementById('reset-stopwatch'),closeTimerBtn=document.getElementById('close-timer'),accumulatedTime=document.getElementById('accumulated-time'),stopwatchAccumulated=document.getElementById('stopwatch-accumulated');
+let currentTimerCardId=null,currentMode='pomodoro',pomodoroMinutes=25,pomodoroSeconds=0,stopwatchSeconds=0,isRunning=false;
+function openTimerModal(cardId){
+  // If there's an active timer on a different card, don't allow opening
+  if(activeTimer&&activeTimer.cardId!==cardId){
+    alert('A timer is already running on another task. Please stop it first.');
+    return;
+  }
+  
+  currentTimerCardId=cardId;
+  if(!state.timers[cardId])state.timers[cardId]={accumulated:0};
+  updateAccumulatedDisplay();
+  
+  if(activeTimer&&activeTimer.cardId===cardId){
+    currentMode=activeTimer.mode;
+    if(currentMode==='pomodoro'){
+      pomodoroMinutes=Math.floor(activeTimer.remaining/60);
+      pomodoroSeconds=activeTimer.remaining%60;
+      updateTimerDisplay();
+    }else{
+      stopwatchSeconds=activeTimer.elapsed;
+      updateStopwatchDisplay();
+    }
+    isRunning=true;
+  }else{
+    isRunning=false;
+    if(currentMode==='pomodoro'){
+      pomodoroMinutes=25;
+      pomodoroSeconds=0;
+      updateTimerDisplay();
+    }else{
+      stopwatchSeconds=0;
+      updateStopwatchDisplay();
+    }
+  }
+  
+  switchTab(currentMode);
+  updateTimerButtons();
+  timerModal.style.display='flex';
 }
+function switchTab(mode){currentMode=mode;timerTabs.forEach(tab=>{if(tab.dataset.tab===mode)tab.classList.add('active');else tab.classList.remove('active')});if(mode==='pomodoro'){pomodoroContent.style.display='block';stopwatchContent.style.display='none'}else{pomodoroContent.style.display='none';stopwatchContent.style.display='block'}}
+timerTabs.forEach(tab=>tab.addEventListener('click',()=>{if(!isRunning)switchTab(tab.dataset.tab)}));
+presetBtns.forEach(btn=>btn.addEventListener('click',()=>{if(!isRunning){pomodoroMinutes=parseInt(btn.dataset.minutes);pomodoroSeconds=0;updateTimerDisplay()}}));
+setCustomBtn.addEventListener('click',()=>{if(!isRunning){const mins=parseInt(customMinutes.value);if(mins&&mins>0){pomodoroMinutes=mins;pomodoroSeconds=0;updateTimerDisplay();customMinutes.value=''}}});
+function updateTimerDisplay(){timerDisplay.textContent=`${String(pomodoroMinutes).padStart(2,'0')}:${String(pomodoroSeconds).padStart(2,'0')}`}
+function updateStopwatchDisplay(){const mins=Math.floor(stopwatchSeconds/60),secs=stopwatchSeconds%60;stopwatchDisplay.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`}
+function updateAccumulatedDisplay(){const total=state.timers[currentTimerCardId]?.accumulated||0,hours=Math.floor(total/3600),mins=Math.floor((total%3600)/60),text=`Total: ${hours}h ${mins}m`;accumulatedTime.textContent=text;stopwatchAccumulated.textContent=text}
+function updateTimerButtons(){if(currentMode==='pomodoro'){startTimerBtn.style.display=isRunning?'none':'inline-block';pauseTimerBtn.style.display=isRunning?'inline-block':'none'}else{startStopwatchBtn.style.display=isRunning?'none':'inline-block';pauseStopwatchBtn.style.display=isRunning?'inline-block':'none'}}
+startTimerBtn.addEventListener('click',()=>startTimer('pomodoro'));
+pauseTimerBtn.addEventListener('click',()=>pauseTimer());
+resetTimerBtn.addEventListener('click',()=>{stopTimer();pomodoroMinutes=25;pomodoroSeconds=0;updateTimerDisplay()});
+startStopwatchBtn.addEventListener('click',()=>startTimer('stopwatch'));
+pauseStopwatchBtn.addEventListener('click',()=>pauseTimer());
+resetStopwatchBtn.addEventListener('click',()=>{stopTimer();stopwatchSeconds=0;updateStopwatchDisplay()});
+function startTimer(mode){isRunning=true;if(mode==='pomodoro'){activeTimer={cardId:currentTimerCardId,mode:'pomodoro',remaining:pomodoroMinutes*60+pomodoroSeconds,startTime:Date.now()}}else{activeTimer={cardId:currentTimerCardId,mode:'stopwatch',elapsed:stopwatchSeconds,startTime:Date.now()}}timerInterval=setInterval(()=>{if(activeTimer.mode==='pomodoro'){const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000),remaining=Math.max(0,activeTimer.remaining-elapsed);pomodoroMinutes=Math.floor(remaining/60);pomodoroSeconds=remaining%60;updateTimerDisplay();updateInlineTimerForCard(activeTimer.cardId);if(remaining===0){playDing();stopTimer();state.timers[currentTimerCardId].accumulated+=activeTimer.remaining;save();updateAccumulatedDisplay()}}else{const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000);stopwatchSeconds=activeTimer.elapsed+elapsed;updateStopwatchDisplay();updateInlineTimerForCard(activeTimer.cardId)}},100);updateTimerButtons();render()}
+function pauseTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}if(activeTimer){const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000);if(activeTimer.mode==='pomodoro'){activeTimer.remaining=Math.max(0,activeTimer.remaining-elapsed);state.timers[currentTimerCardId].accumulated+=elapsed}else{activeTimer.elapsed+=elapsed;state.timers[currentTimerCardId].accumulated+=elapsed}save();updateAccumulatedDisplay()}isRunning=false;activeTimer=null;updateTimerButtons();render()}
+function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}if(activeTimer&&isRunning){const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000);state.timers[currentTimerCardId].accumulated+=elapsed;save()}isRunning=false;activeTimer=null;updateTimerButtons();render()}
+function updateInlineTimerForCard(cardId){const card=document.querySelector(`[data-id="${cardId}"]`);if(card)updateInlineTimer(card)}
+function updateInlineTimer(card){const inline=card.querySelector('.inline-timer'),timeSpan=inline.querySelector('.timer-time');if(activeTimer&&activeTimer.cardId===card.dataset.id){if(activeTimer.mode==='pomodoro'){const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000),remaining=Math.max(0,activeTimer.remaining-elapsed),mins=Math.floor(remaining/60),secs=remaining%60;timeSpan.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`}else{const elapsed=Math.floor((Date.now()-activeTimer.startTime)/1000),total=activeTimer.elapsed+elapsed,mins=Math.floor(total/60),secs=total%60;timeSpan.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`}}}
+function playDing(){const audioContext=new(window.AudioContext||window.webkitAudioContext)(),oscillator=audioContext.createOscillator(),gainNode=audioContext.createGain();oscillator.connect(gainNode);gainNode.connect(audioContext.destination);oscillator.frequency.value=800;oscillator.type='sine';gainNode.gain.setValueAtTime(0.3,audioContext.currentTime);gainNode.gain.exponentialRampToValueAtTime(0.01,audioContext.currentTime+0.5);oscillator.start(audioContext.currentTime);oscillator.stop(audioContext.currentTime+0.5)}
+closeTimerBtn.addEventListener('click',()=>{timerModal.style.display='none'});
+timerModal.addEventListener('click',e=>{if(e.target===timerModal)timerModal.style.display='none'});
 
-/* --- Hide picker --- */
-function hideColorPicker(){
-pickerPopup.classList.remove('active');
-pickerBackdrop.classList.remove('active');
-currentCategory=null;
-}
+const analyticsModal=document.getElementById('analytics-modal');
+const openAnalyticsBtn=document.getElementById('open-analytics');
+const closeAnalyticsBtn=document.getElementById('close-analytics');
+const filterBtns=document.querySelectorAll('.filter-btn');
+let currentFilter='7';
 
-
-/* Hex input live update */
-hexInput.addEventListener('input',e=>{
-let v=e.target.value.replace(/[^0-9a-fA-F]/g,'').toUpperCase();
-if(v.length>6)v=v.slice(0,6);
-e.target.value=v;
-if(v.length===6){
- const hex='#'+v;
- const{h,l}=hexToHsl(hex);
- const rect=colorField.getBoundingClientRect();
- const x=(h/360)*rect.width;
- const y=(1-l/100)*rect.height;
- 
- const thumbRadius = 13;
- const finalX = Math.max(thumbRadius, Math.min(rect.width - thumbRadius, x));
- const finalY = Math.max(thumbRadius, Math.min(rect.height - thumbRadius, y));
- 
- colorThumb.style.left=finalX+'px';
- colorThumb.style.top=finalY+'px';
- updatePreviewFromHSL(h,l);
-}
+openAnalyticsBtn.addEventListener('click',()=>{
+  updateAnalytics();
+  analyticsModal.style.display='flex';
 });
 
-
-pickerCancel.addEventListener('click',hideColorPicker);
-pickerSave.addEventListener('click',hideColorPicker);
-pickerBackdrop.addEventListener('click',hideColorPicker);
-
-
-/* Open picker when clicking swatches */
-document.querySelectorAll('.color-preview').forEach(p=>{
-p.addEventListener('click',()=>{
- const cat=p.dataset.category,
- v=getCSSVar(`--${cat}`),
- m=v.match(/\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%/);
- if(m){
-  showColorPicker(cat,hslToHex(+m[1],+m[2],+m[3]));
- }
-});
+closeAnalyticsBtn.addEventListener('click',()=>{
+  analyticsModal.style.display='none';
 });
 
-
-/* Modal open/close */
-const modal=document.getElementById('color-modal'),
-openBtn=document.getElementById('open-colors'),
-saveBtn=document.getElementById('save-colors'),
-cancelBtn=document.getElementById('cancel-colors');
-
-
-let tempColors={}, tempNames={};
-
-
-function showModal(s){
-modal.style.display=s?'flex':'none';
-if(s){
- tempColors={};
- tempNames={};
-}
-}
-
-
-openBtn.addEventListener('click',()=>showModal(true));
-cancelBtn.addEventListener('click',()=>{showModal(false);hideColorPicker()});
-modal.addEventListener('click',e=>{if(e.target===modal){showModal(false);hideColorPicker()}});
-
-
-/* Save colors */
-saveBtn.addEventListener('click',()=>{
-state.colors=state.colors||{};
-for(const k of Object.keys(tempColors)){
- const hex=tempColors[k];
- state.colors[k]=hex;
- const{h,s,l}=hexToHsl(hex);
- setCSSVar(`--${k}`,`${h}, ${s}%, ${l}%`);
-}
-save();
-showModal(false);
-hideColorPicker();
-render();
+analyticsModal.addEventListener('click',e=>{
+  if(e.target===analyticsModal)analyticsModal.style.display='none';
 });
 
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter=btn.dataset.range;
+    updateAnalytics();
+  });
+});
+
+function updateAnalytics(){
+  const range=currentFilter==='all'?Infinity:parseInt(currentFilter)*24*60*60*1000;
+  const cutoff=Date.now()-range;
+  
+  // Calculate total time
+  let totalTime=0;
+  Object.values(state.timers||{}).forEach(t=>{
+    totalTime+=t.accumulated||0;
+  });
+  
+  // Get all cards
+  const allCards=[];
+  ['todo','next','doing','done'].forEach(col=>{
+    state.columns[col].forEach(card=>{
+      allCards.push({...card,column:col});
+    });
+  });
+  
+  // Filter by date range
+  const filteredCards=allCards.filter(c=>!c.createdAt||(c.createdAt>=cutoff));
+  const filteredHistory=(state.history||[]).filter(h=>h.timestamp>=cutoff);
+  
+  // Tasks created
+  const tasksCreated=filteredHistory.filter(h=>h.action==='created').length;
+  
+  // Tasks completed
+  const tasksCompleted=filteredHistory.filter(h=>h.action==='completed').length;
+  
+  // Completion rate
+  const completionRate=tasksCreated>0?Math.round((tasksCompleted/tasksCreated)*100):0;
+  
+  // Update stat cards
+  const hours=Math.floor(totalTime/3600);
+  const mins=Math.floor((totalTime%3600)/60);
+  document.getElementById('stat-total-time').textContent=`${hours}h ${mins}m`;
+  document.getElementById('stat-completed').textContent=tasksCompleted;
+  document.getElementById('stat-created').textContent=tasksCreated;
+  document.getElementById('stat-rate').textContent=completionRate+'%';
+  
+  // Time by category
+  const timeByCategory={};
+  allCards.forEach(card=>{
+    const time=state.timers[card.id]?.accumulated||0;
+    if(time>0){
+      timeByCategory[card.category]=(timeByCategory[card.category]||0)+time;
+    }
+  });
+  
+  renderPieChart(timeByCategory);
+  
+  // Category distribution
+  const categoryDist={};
+  filteredCards.forEach(card=>{
+    categoryDist[card.category]=(categoryDist[card.category]||0)+1;
+  });
+  
+  renderBarChart(categoryDist);
+  
+  // Top tasks
+  const tasksWithTime=allCards
+    .map(card=>({
+      ...card,
+      time:state.timers[card.id]?.accumulated||0
+    }))
+    .filter(c=>c.time>0)
+    .sort((a,b)=>b.time-a.time)
+    .slice(0,5);
+  
+  renderTopTasks(tasksWithTime);
+}
+
+function renderPieChart(data){
+  const container=document.getElementById('category-pie');
+  container.innerHTML='';
+  
+  const total=Object.values(data).reduce((a,b)=>a+b,0);
+  if(total===0){
+    container.innerHTML='<div style="color:var(--muted);font-size:14px">No time tracked yet</div>';
+    return;
+  }
+  
+  const colors={
+    design:'hsla(258,100%,86%,0.85)',
+    dev:'hsla(174,70%,80%,0.85)',
+    research:'hsla(44,100%,84%,0.85)',
+    bug:'hsla(0,100%,82%,0.85)',
+    chore:'hsla(200,100%,85%,0.85)'
+  };
+  
+  // Create tooltip
+  const tooltip=document.createElement('div');
+  tooltip.className='pie-tooltip';
+  container.appendChild(tooltip);
+  
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 200 200');
+  svg.style.width='220px';
+  svg.style.height='220px';
+  
+  let currentAngle=0;
+  const outerRadius=90;
+  const innerRadius=55; // Creates the donut hole
+  const centerX=100;
+  const centerY=100;
+  
+  Object.entries(data).forEach(([cat,time])=>{
+    const percent=time/total;
+    const angle=percent*360;
+    
+    // Calculate coordinates for outer and inner arcs
+    const startAngle=(currentAngle-90)*Math.PI/180;
+    const endAngle=(currentAngle+angle-90)*Math.PI/180;
+    
+    const createPath=(outerR,innerR)=>{
+      const x1Outer=centerX+outerR*Math.cos(startAngle);
+      const y1Outer=centerY+outerR*Math.sin(startAngle);
+      const x2Outer=centerX+outerR*Math.cos(endAngle);
+      const y2Outer=centerY+outerR*Math.sin(endAngle);
+      
+      const x1Inner=centerX+innerR*Math.cos(startAngle);
+      const y1Inner=centerY+innerR*Math.sin(startAngle);
+      const x2Inner=centerX+innerR*Math.cos(endAngle);
+      const y2Inner=centerY+innerR*Math.sin(endAngle);
+      
+      const largeArc=angle>180?1:0;
+      
+      return `
+        M${x1Outer},${y1Outer}
+        A${outerR},${outerR} 0 ${largeArc},1 ${x2Outer},${y2Outer}
+        L${x2Inner},${y2Inner}
+        A${innerR},${innerR} 0 ${largeArc},0 ${x1Inner},${y1Inner}
+        Z
+      `;
+    };
+    
+    // Create donut segment path
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',createPath(outerRadius,innerRadius));
+    path.setAttribute('fill',colors[cat]);
+    path.setAttribute('stroke','#fff');
+    path.setAttribute('stroke-width','2');
+    path.classList.add('pie-segment');
+    
+    // Hover events with symmetric scaling
+    path.addEventListener('mouseenter',e=>{
+      const hoverGrow=4;
+      path.setAttribute('d',createPath(outerRadius+hoverGrow,innerRadius-hoverGrow));
+      const hours=Math.floor(time/3600);
+      const mins=Math.floor((time%3600)/60);
+      const pct=Math.round(percent*100);
+      tooltip.innerHTML=`<div style="text-transform:capitalize;font-weight:600;margin-bottom:4px">${cat}</div><div style="color:var(--muted)">${hours}h ${mins}m (${pct}%)</div>`;
+      tooltip.classList.add('show');
+      
+      const rect=container.getBoundingClientRect();
+      tooltip.style.left=e.clientX-rect.left+'px';
+      tooltip.style.top=e.clientY-rect.top-60+'px';
+    });
+    
+    path.addEventListener('mousemove',e=>{
+      const rect=container.getBoundingClientRect();
+      tooltip.style.left=e.clientX-rect.left+'px';
+      tooltip.style.top=e.clientY-rect.top-60+'px';
+    });
+    
+    path.addEventListener('mouseleave',()=>{
+      path.setAttribute('d',createPath(outerRadius,innerRadius));
+      tooltip.classList.remove('show');
+    });
+    
+    svg.appendChild(path);
+    currentAngle+=angle;
+  });
+  
+  container.appendChild(svg);
+}
+
+function renderBarChart(data){
+  const container=document.getElementById('category-bars');
+  container.innerHTML='';
+  
+  const max=Math.max(...Object.values(data),1);
+  const colors={
+    design:'hsla(var(--design),0.7)',
+    dev:'hsla(var(--dev),0.7)',
+    research:'hsla(var(--research),0.7)',
+    bug:'hsla(var(--bug),0.7)',
+    chore:'hsla(var(--chore),0.7)'
+  };
+  
+  Object.entries(data).sort((a,b)=>b[1]-a[1]).forEach(([cat,count])=>{
+    const percent=(count/max)*100;
+    const div=document.createElement('div');
+    div.className='bar-item';
+    div.innerHTML=`
+      <div class="bar-label" style="text-transform:capitalize">${cat}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${percent}%;background:${colors[cat]}">${count}</div>
+      </div>
+      <div class="bar-value">${count}</div>
+    `;
+    container.appendChild(div);
+  });
+  
+  if(Object.keys(data).length===0){
+    container.innerHTML='<div style="color:var(--muted);font-size:14px;text-align:center;padding:40px 0">No tasks yet</div>';
+  }
+}
+
+function renderTopTasks(tasks){
+  const container=document.getElementById('top-tasks-list');
+  container.innerHTML='';
+  
+  if(tasks.length===0){
+    container.innerHTML='<div style="color:var(--muted);font-size:14px;text-align:center;padding:20px 0">No timed tasks yet</div>';
+    return;
+  }
+  
+  tasks.forEach(task=>{
+    const hours=Math.floor(task.time/3600);
+    const mins=Math.floor((task.time%3600)/60);
+    const div=document.createElement('div');
+    div.className='task-item';
+    div.innerHTML=`
+      <span class="task-name">${task.title}</span>
+      <span class="task-category cat-${task.category}">${task.category}</span>
+      <span class="task-time">${hours}h ${mins}m</span>
+    `;
+    container.appendChild(div);
+  });
+}
 
 render();
 </script>
