@@ -687,6 +687,14 @@ pickerSave.addEventListener('click',()=>{
   if(currentCategory && currentHue!==undefined && currentLightness!==undefined){
     const hex=hslToHex(currentHue,70,currentLightness);
     tempColors[currentCategory]=hex;
+    
+    // Update the preview swatch immediately
+    const preview=document.querySelector(`.color-preview[data-category="${currentCategory}"]`);
+    if(preview){
+      const{h,s,l}=hexToHsl(hex);
+      preview.style.background=`hsla(${h},${s}%,${l}%,0.22)`;
+      preview.style.boxShadow=`0 0 0 1.5px hsla(${h},${s}%,${l}%,0.7) inset`;
+    }
   }
   hideColorPicker();
 });
