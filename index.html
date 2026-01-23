@@ -10,7 +10,9 @@
 <style>
 :root{--bg:#f9f6ef;--text:#1b1b1f;--muted:#6f6f76;--card:#fff;--radius:14px;--ring:0 0 0 2px rgba(0,0,0,0.06);--design:258,100%,86%;--dev:174,70%,80%;--research:44,100%,84%;--bug:0,100%,82%;--chore:200,100%,85%}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--text);background:radial-gradient(1200px 800px at 20% -10%,rgba(255,255,255,0.8),transparent),radial-gradient(1000px 700px at 100% 20%,hsla(var(--design),0.25),transparent),radial-gradient(900px 600px at -10% 100%,hsla(var(--dev),0.25),transparent),var(--bg)}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--text);background:radial-gradient(1200px 800px at 20% -10%,rgba(255,255,255,0.8),transparent),radial-gradient(1000px 700px at 100% 20%,hsla(var(--design),0.25),transparent),radial-gradient(900px 600px at -10% 100%,hsla(var(--dev),0.25),transparent),var(--bg);scroll-snap-type:y mandatory;overflow-y:scroll}
+
+.board-section,.calendar-section{min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always}
 
 .app-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px clamp(16px,4vw,40px)}
 .app-header h1{margin:0;font-size:clamp(22px,3.2vw,32px);letter-spacing:-0.02em;font-weight:600}
@@ -84,12 +86,16 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 .card:hover .card-bottom{display:flex}
 .card-bottom.has-description{display:flex}
 .card-bottom.has-timer{display:flex}
+.card-bottom.has-deadline{display:flex}
 .card-icon{width:18px;height:18px;padding:4px;border:none;background:transparent;cursor:pointer;border-radius:6px;transition:background 150ms ease}
 .card-icon:hover{background:rgba(0,0,0,0.06)}
 .card-icon svg{width:100%;height:100%;display:block}
 
 .inline-timer{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.5);cursor:pointer;margin-left:auto}
 .inline-timer:hover{background:rgba(255,255,255,0.7)}
+
+.inline-deadline{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.5);cursor:pointer}
+.inline-deadline:hover{background:rgba(255,255,255,0.7)}
 
 .legend-wrap{margin-left:auto;display:flex;align-items:center;gap:10px}
 .legend-plus{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(0,0,0,0.06);background:#fff;box-shadow:var(--ring);cursor:pointer;color:var(--muted);font-weight:600}
@@ -208,11 +214,46 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 
 .picker-actions{display:flex;justify-content:center;gap:10px}
 
+.scroll-indicator{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;color:var(--muted);font-size:13px;opacity:0.7;transition:opacity 300ms ease}
+.scroll-indicator:hover{opacity:1}
+.scroll-text{margin-bottom:4px;letter-spacing:0.08em;text-transform:uppercase}
+.scroll-arrow{font-size:20px;animation:bounce 2s infinite ease-in-out}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.board-section{position:relative}
+
+.calendar-section{background:radial-gradient(1200px 800px at 80% -10%,rgba(255,255,255,0.9),transparent),radial-gradient(1000px 700px at 0% 30%,hsla(var(--chore),0.3),transparent),radial-gradient(900px 600px at 90% 100%,hsla(var(--research),0.3),transparent),var(--bg);padding:28px clamp(16px,4vw,40px)}
+.calendar-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.calendar-title{margin:0;font-size:clamp(20px,3vw,28px);letter-spacing:-0.02em;font-weight:600}
+.calendar-controls{display:flex;gap:8px}
+.view-toggle{display:flex;gap:8px;border-radius:10px;background:rgba(255,255,255,0.7);padding:4px}
+.view-btn{padding:6px 16px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:14px;font-weight:500;transition:all 200ms}
+.view-btn:hover{background:rgba(0,0,0,0.04)}
+.view-btn.active{background:#666;color:#fff}
+
+.calendar-grid{display:grid;gap:12px}
+.calendar-grid.month-view{grid-template-columns:repeat(7,1fr)}
+.calendar-grid.week-view{grid-template-columns:repeat(7,1fr)}
+
+.day-header{text-align:center;font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;padding:12px 0}
+
+.day-cell{background:rgba(255,255,255,0.7);backdrop-filter:saturate(120%) blur(6px);border:1px solid rgba(0,0,0,0.06);border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.04);padding:12px;min-height:120px;transition:all 200ms}
+.day-cell:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.08)}
+.day-cell.other-month{opacity:0.5}
+.day-cell.today{border:2px solid var(--text);border-color:rgba(0,0,0,0.3)}
+.day-cell.week-view{min-height:400px}
+
+.day-number{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text)}
+
+.calendar-task{padding:4px 8px;border-radius:6px;font-size:11px;margin-bottom:4px;cursor:pointer;transition:all 150ms;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.calendar-task:hover{transform:scale(1.02);opacity:0.9}
+.calendar-task.from-board{opacity:0.7}
+
 @media (max-width:900px){.board{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
+<div class="board-section">
 <header class="app-header">
  <button class="analytics-button" id="open-analytics" title="Analytics">
    <svg viewBox="0 0 24 24" fill="none">
@@ -306,6 +347,27 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
 <div class="cards" data-list="done"></div>
 </section>
 </main>
+<div class="scroll-indicator">
+  <div class="scroll-text">Scroll for Calendar</div>
+  <div class="scroll-arrow">↓</div>
+</div>
+</div>
+
+<div class="calendar-section">
+  <header class="calendar-header">
+    <h2 class="calendar-title" id="calendar-title">January 2026</h2>
+    <div class="calendar-controls">
+      <button class="btn" id="prev-period">‹</button>
+      <button class="btn" id="today-btn">Today</button>
+      <button class="btn" id="next-period">›</button>
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="month">Month</button>
+      <button class="view-btn" data-view="week">Week</button>
+    </div>
+  </header>
+  <div class="calendar-grid" id="calendar-grid"></div>
+</div>
 
 <template id="card-template">
  <article class="card" draggable="true">
@@ -329,8 +391,19 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
          <path d="M8 2h8"/>
        </svg>
      </button>
+     <button class="card-icon deadline-icon" title="Deadline">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+         <line x1="16" y1="2" x2="16" y2="6"/>
+         <line x1="8" y1="2" x2="8" y2="6"/>
+         <line x1="3" y1="10" x2="21" y2="10"/>
+       </svg>
+     </button>
      <div class="inline-timer" style="display:none">
        <span class="timer-time">25:00</span>
+     </div>
+     <div class="inline-deadline" style="display:none">
+       <span class="deadline-date">12/25</span>
      </div>
    </div>
  </article>
@@ -467,6 +540,20 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,R
  </div>
 </div>
 
+<div class="modal-backdrop" id="deadline-modal">
+ <div class="modal description-modal">
+   <div class="description-header">
+     <h3>Set Deadline</h3>
+     <button class="icon-button" id="close-deadline">✕</button>
+   </div>
+   <input type="date" id="deadline-input" class="description-edit" style="width:100%;height:40px;padding:0 12px;display:block"/>
+   <div class="modal-actions" style="margin-top:16px">
+     <button class="btn" id="cancel-deadline">Cancel</button>
+     <button class="btn primary" id="save-deadline">Save</button>
+   </div>
+ </div>
+</div>
+
 <div class="picker-backdrop" id="picker-backdrop"></div>
 
 <div class="color-picker-popup" id="color-picker-popup">
@@ -500,13 +587,15 @@ function load(){
     if(!parsed.columns.done) parsed.columns.done=[];
     if(!parsed.descriptions) parsed.descriptions={};
     if(!parsed.timers) parsed.timers={};
+    if(!parsed.deadlines) parsed.deadlines={};
+    if(!parsed.calendarTasks) parsed.calendarTasks={};
     return parsed;
   }catch(e){
     console.error('Load error:',e);
     return null;
   }
 }
-const state=load()||{columns:{todo:[],next:[],doing:[],done:[]},colors:null,categories:dCat,descriptions:{},timers:{}},board=document.getElementById('board'),tpl=document.getElementById('card-template');
+const state=load()||{columns:{todo:[],next:[],doing:[],done:[]},colors:null,categories:dCat,descriptions:{},timers:{},deadlines:{},calendarTasks:{}},board=document.getElementById('board'),tpl=document.getElementById('card-template');
 let activeTimer=null,timerInterval=null;
 function save(){localStorage.setItem(K,JSON.stringify(state))}
 function uid(){return Math.random().toString(36).slice(2,9)}
@@ -522,6 +611,7 @@ n.querySelector('.del').addEventListener('click',()=>removeCard(c.id));
 
 const descIcon=n.querySelector('.desc-icon');
 const timerIcon=n.querySelector('.timer-icon');
+const deadlineIcon=n.querySelector('.deadline-icon');
 const cardBottom=n.querySelector('.card-bottom');
 
 // Check if this card has a description
@@ -529,6 +619,9 @@ const hasDescription=!!state.descriptions[c.id];
 
 // Check if this card has the active timer
 const hasActiveTimer=activeTimer&&activeTimer.cardId===c.id;
+
+// Check if this card has a deadline
+const hasDeadline=!!state.deadlines[c.id];
 
 // Only show description icon if there's a description
 if(hasDescription){
@@ -574,6 +667,40 @@ descIcon.addEventListener('click',e=>{
 timerIcon.addEventListener('click',e=>{
   e.stopPropagation();
   openTimerModal(c.id);
+});
+
+// Deadline icon visibility
+if(hasDeadline){
+  cardBottom.classList.add('has-deadline');
+  deadlineIcon.style.display='block';
+} else {
+  deadlineIcon.style.display='none';
+  n.addEventListener('mouseenter',()=>{
+    deadlineIcon.style.display='block';
+  });
+  n.addEventListener('mouseleave',()=>{
+    if(!hasDeadline){
+      deadlineIcon.style.display='none';
+    }
+  });
+}
+
+deadlineIcon.addEventListener('click',e=>{
+  e.stopPropagation();
+  openDeadlineModal(c.id);
+});
+
+const inlineDeadline=n.querySelector('.inline-deadline');
+if(hasDeadline){
+  const deadline=new Date(state.deadlines[c.id]);
+  const month=deadline.getMonth()+1;
+  const day=deadline.getDate();
+  inlineDeadline.querySelector('.deadline-date').textContent=`${month}/${day}`;
+  inlineDeadline.style.display='inline-flex';
+}
+inlineDeadline.addEventListener('click',e=>{
+  e.stopPropagation();
+  openDeadlineModal(c.id);
 });
 
 const inlineTimer=n.querySelector('.inline-timer');
@@ -776,6 +903,34 @@ function updateInlineTimer(card){const inline=card.querySelector('.inline-timer'
 function playDing(){const audioContext=new(window.AudioContext||window.webkitAudioContext)(),oscillator=audioContext.createOscillator(),gainNode=audioContext.createGain();oscillator.connect(gainNode);gainNode.connect(audioContext.destination);oscillator.frequency.value=800;oscillator.type='sine';gainNode.gain.setValueAtTime(0.3,audioContext.currentTime);gainNode.gain.exponentialRampToValueAtTime(0.01,audioContext.currentTime+0.5);oscillator.start(audioContext.currentTime);oscillator.stop(audioContext.currentTime+0.5)}
 closeTimerBtn.addEventListener('click',()=>{timerModal.style.display='none'});
 timerModal.addEventListener('click',e=>{if(e.target===timerModal)timerModal.style.display='none'});
+
+const deadlineModal=document.getElementById('deadline-modal'),deadlineInput=document.getElementById('deadline-input'),closeDeadlineBtn=document.getElementById('close-deadline'),saveDeadlineBtn=document.getElementById('save-deadline'),cancelDeadlineBtn=document.getElementById('cancel-deadline');
+let currentDeadlineCardId=null;
+function openDeadlineModal(cardId){
+  currentDeadlineCardId=cardId;
+  const deadline=state.deadlines[cardId];
+  if(deadline){
+    const date=new Date(deadline);
+    deadlineInput.value=date.toISOString().split('T')[0];
+  }else{
+    deadlineInput.value='';
+  }
+  deadlineModal.style.display='flex';
+}
+saveDeadlineBtn.addEventListener('click',()=>{
+  const value=deadlineInput.value.trim();
+  if(value){
+    state.deadlines[currentDeadlineCardId]=new Date(value).getTime();
+  }else{
+    delete state.deadlines[currentDeadlineCardId];
+  }
+  save();
+  render();
+  deadlineModal.style.display='none';
+});
+cancelDeadlineBtn.addEventListener('click',()=>{deadlineModal.style.display='none'});
+closeDeadlineBtn.addEventListener('click',()=>{deadlineModal.style.display='none'});
+deadlineModal.addEventListener('click',e=>{if(e.target===deadlineModal)deadlineModal.style.display='none'});
 
 const analyticsModal=document.getElementById('analytics-modal');
 const openAnalyticsBtn=document.getElementById('open-analytics');
@@ -1060,7 +1215,218 @@ function renderTopTasks(tasks){
   });
 }
 
+let currentCalendarDate=new Date();
+let currentView='month';
+const calendarGrid=document.getElementById('calendar-grid');
+const calendarTitle=document.getElementById('calendar-title');
+const prevPeriodBtn=document.getElementById('prev-period');
+const nextPeriodBtn=document.getElementById('next-period');
+const todayBtn=document.getElementById('today-btn');
+const viewBtns=document.querySelectorAll('.view-btn');
+
+function renderCalendar(){
+  if(currentView==='month'){
+    renderMonthView();
+  }else{
+    renderWeekView();
+  }
+}
+
+function renderMonthView(){
+  calendarGrid.className='calendar-grid month-view';
+  const year=currentCalendarDate.getFullYear();
+  const month=currentCalendarDate.getMonth();
+
+  // Update title
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  calendarTitle.textContent=`${monthNames[month]} ${year}`;
+
+  // Clear grid
+  calendarGrid.innerHTML='';
+
+  // Add day headers
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  dayNames.forEach(day=>{
+    const header=document.createElement('div');
+    header.className='day-header';
+    header.textContent=day;
+    calendarGrid.appendChild(header);
+  });
+
+  // Get first day of month and number of days
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const daysInPrevMonth=new Date(year,month,0).getDate();
+
+  // Add previous month overflow days
+  for(let i=firstDay-1;i>=0;i--){
+    const dayNum=daysInPrevMonth-i;
+    const cell=createDayCell(dayNum,month-1,year,true);
+    calendarGrid.appendChild(cell);
+  }
+
+  // Add current month days
+  const today=new Date();
+  for(let day=1;day<=daysInMonth;day++){
+    const isToday=day===today.getDate()&&month===today.getMonth()&&year===today.getFullYear();
+    const cell=createDayCell(day,month,year,false,isToday);
+    calendarGrid.appendChild(cell);
+  }
+
+  // Add next month overflow days
+  const totalCells=firstDay+daysInMonth;
+  const remainingCells=totalCells%7===0?0:7-(totalCells%7);
+  for(let day=1;day<=remainingCells;day++){
+    const cell=createDayCell(day,month+1,year,true);
+    calendarGrid.appendChild(cell);
+  }
+}
+
+function createDayCell(day,month,year,isOtherMonth=false,isToday=false){
+  const cell=document.createElement('div');
+  cell.className='day-cell';
+  if(isOtherMonth)cell.classList.add('other-month');
+  if(isToday)cell.classList.add('today');
+
+  const dayNum=document.createElement('div');
+  dayNum.className='day-number';
+  dayNum.textContent=day;
+  cell.appendChild(dayNum);
+
+  // Get tasks for this date
+  const dateKey=`${year}-${month+1}-${day}`;
+  const tasks=getTasksForDate(dateKey);
+
+  tasks.forEach(task=>{
+    const taskEl=document.createElement('div');
+    taskEl.className=`calendar-task cat-${task.category}`;
+    if(task.fromBoard)taskEl.classList.add('from-board');
+    taskEl.textContent=task.title;
+    taskEl.title=task.title;
+    cell.appendChild(taskEl);
+  });
+
+  return cell;
+}
+
+function getTasksForDate(dateKey){
+  const tasks=[];
+
+  // Get calendar-specific tasks
+  if(state.calendarTasks[dateKey]){
+    state.calendarTasks[dateKey].forEach(task=>{
+      tasks.push({...task,fromBoard:false});
+    });
+  }
+
+  // Get board tasks with deadlines
+  ['todo','next','doing','done'].forEach(col=>{
+    state.columns[col].forEach(card=>{
+      if(state.deadlines[card.id]){
+        const deadline=new Date(state.deadlines[card.id]);
+        const deadlineKey=`${deadline.getFullYear()}-${deadline.getMonth()+1}-${deadline.getDate()}`;
+        if(deadlineKey===dateKey){
+          tasks.push({...card,fromBoard:true});
+        }
+      }
+    });
+  });
+
+  return tasks;
+}
+
+function renderWeekView(){
+  calendarGrid.className='calendar-grid week-view';
+  // Get the start of the week (Sunday)
+  const date=new Date(currentCalendarDate);
+  const day=date.getDay();
+  const startOfWeek=new Date(date);
+  startOfWeek.setDate(date.getDate()-day);
+
+  // Update title
+  const endOfWeek=new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate()+6);
+  const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  calendarTitle.textContent=`${monthNames[startOfWeek.getMonth()]} ${startOfWeek.getDate()} - ${monthNames[endOfWeek.getMonth()]} ${endOfWeek.getDate()}, ${startOfWeek.getFullYear()}`;
+
+  // Clear grid
+  calendarGrid.innerHTML='';
+
+  // Add day headers
+  const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today=new Date();
+
+  for(let i=0;i<7;i++){
+    const currentDay=new Date(startOfWeek);
+    currentDay.setDate(startOfWeek.getDate()+i);
+
+    const isToday=currentDay.getDate()===today.getDate()&&currentDay.getMonth()===today.getMonth()&&currentDay.getFullYear()===today.getFullYear();
+
+    const cell=document.createElement('div');
+    cell.className='day-cell week-view';
+    if(isToday)cell.classList.add('today');
+
+    const header=document.createElement('div');
+    header.className='day-header';
+    header.textContent=dayNames[i];
+    cell.appendChild(header);
+
+    const dayNum=document.createElement('div');
+    dayNum.className='day-number';
+    dayNum.textContent=currentDay.getDate();
+    cell.appendChild(dayNum);
+
+    // Get tasks for this date
+    const dateKey=`${currentDay.getFullYear()}-${currentDay.getMonth()+1}-${currentDay.getDate()}`;
+    const tasks=getTasksForDate(dateKey);
+
+    tasks.forEach(task=>{
+      const taskEl=document.createElement('div');
+      taskEl.className=`calendar-task cat-${task.category}`;
+      if(task.fromBoard)taskEl.classList.add('from-board');
+      taskEl.textContent=task.title;
+      taskEl.title=task.title;
+      cell.appendChild(taskEl);
+    });
+
+    calendarGrid.appendChild(cell);
+  }
+}
+
+prevPeriodBtn.addEventListener('click',()=>{
+  if(currentView==='month'){
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth()-1);
+  }else{
+    currentCalendarDate.setDate(currentCalendarDate.getDate()-7);
+  }
+  renderCalendar();
+});
+
+nextPeriodBtn.addEventListener('click',()=>{
+  if(currentView==='month'){
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth()+1);
+  }else{
+    currentCalendarDate.setDate(currentCalendarDate.getDate()+7);
+  }
+  renderCalendar();
+});
+
+todayBtn.addEventListener('click',()=>{
+  currentCalendarDate=new Date();
+  renderCalendar();
+});
+
+viewBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    viewBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView=btn.dataset.view;
+    renderCalendar();
+  });
+});
+
 render();
+renderCalendar();
 </script>
 </body>
 </html>
