@@ -263,35 +263,51 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .calendar-task:hover{transform:scale(1.02);opacity:0.9}
 .calendar-task.from-board{opacity:0.7}
 
-.notes-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;z-index:9998}
-.notes-backdrop.active{display:block}
+.notes-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:9998;padding:40px}
+.notes-backdrop.active{display:flex}
 
-.notes-panel{position:fixed;left:-380px;top:0;bottom:0;width:350px;background:#fff;box-shadow:2px 0 20px rgba(0,0,0,0.15);z-index:9999;display:flex;flex-direction:column;transition:left 300ms cubic-bezier(0.4, 0, 0.2, 1)}
-.notes-panel.active{left:0}
+.notes-panel{position:relative;width:calc(50% - 40px);max-width:700px;height:calc(100vh - 80px);background:rgba(255,255,255,0.65);backdrop-filter:saturate(120%) blur(6px);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:none;opacity:0;transform:scale(0.95);transition:all 300ms cubic-bezier(0.4, 0, 0.2, 1)}
+.notes-panel.active{display:grid;grid-template-columns:140px 1fr;grid-template-rows:auto 1fr;opacity:1;transform:scale(1)}
 
-.notes-header{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.notes-header{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(0,0,0,0.06)}
 .notes-header h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-0.02em}
 
-.notes-tabs{display:flex;padding:12px 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,0.06);overflow-x:auto;scrollbar-width:none}
-.notes-tabs::-webkit-scrollbar{display:none}
-.notes-tab{padding:6px 12px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all 200ms;white-space:nowrap}
+.notes-sidebar{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:8px;padding:16px 12px;border-right:1px solid rgba(0,0,0,0.06);overflow-y:auto}
+.notes-tab{width:100%;padding:10px 12px;border-radius:10px;border:none;background:transparent;cursor:pointer;font-size:14px;font-weight:500;color:var(--text);transition:all 200ms;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .notes-tab:hover{background:rgba(0,0,0,0.04)}
-.notes-tab.active{background:#666;color:#fff}
+.notes-tab.active{background:rgba(255,255,255,0.95);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.notes-add-tab{color:var(--muted);font-size:13px;border:1px dashed rgba(0,0,0,0.15)}
+.notes-add-tab:hover{border-style:solid;background:rgba(0,0,0,0.02)}
 
-.notes-input-area{padding:16px;border-bottom:1px solid rgba(0,0,0,0.06)}
-.notes-input-area textarea{width:100%;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px;font-family:inherit;font-size:14px;resize:vertical;outline:none;transition:border-color 200ms;margin-bottom:10px}
-.notes-input-area textarea:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:9px}
-.notes-input-area .btn{width:100%;height:36px;justify-content:center}
+.notes-main{grid-column:2;grid-row:2;display:flex;flex-direction:column;overflow:hidden}
 
-.notes-list{flex:1;overflow-y:auto;padding:16px}
-.note-item{background:rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.06);border-radius:12px;padding:12px;margin-bottom:12px;position:relative;transition:all 200ms}
-.note-item:hover{background:rgba(0,0,0,0.04);transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.note-text{font-size:14px;line-height:1.5;color:var(--text);word-wrap:break-word;white-space:pre-wrap;margin-bottom:8px}
+.notes-controls{padding:20px 24px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.topic-select{position:relative;margin-bottom:16px}
+.topic-button{width:100%;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 32px 0 12px;background:#fff;cursor:pointer;text-align:left;font:inherit;position:relative;display:flex;align-items:center;font-size:15px;transition:all 200ms}
+.topic-button:hover{background-color:#fafafa}
+.topic-button::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--muted)}
+.topic-dropdown{position:absolute;top:40px;left:0;width:100%;background:#f8f8f8;border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;z-index:100;overflow:hidden;padding:8px 4px;max-height:200px;overflow-y:auto}
+.topic-dropdown.open{display:block}
+.topic-option{padding:8px 12px;cursor:pointer;transition:all 200ms ease;border-radius:6px;margin:2px 0;background:transparent;color:var(--text);border:none;width:100%;text-align:left;font:inherit;font-size:15px}
+.topic-option:hover{background:rgba(0,0,0,0.08)}
+
+.notes-textarea{width:100%;height:200px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:12px;font-family:inherit;font-size:15px;line-height:1.6;resize:vertical;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease;box-shadow:0 1px 2px rgba(0,0,0,0.05);background:#fff}
+.notes-textarea:hover{border-color:rgba(0,0,0,0.15);box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.notes-textarea:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:11px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.notes-textarea::placeholder{color:var(--muted);opacity:0.6}
+
+.notes-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.notes-actions .btn{min-width:80px}
+
+.notes-list{flex:1;overflow-y:auto;padding:20px 24px}
+.note-item{background:rgba(255,255,255,0.8);border:1px solid rgba(0,0,0,0.06);border-radius:12px;padding:14px;margin-bottom:12px;position:relative;transition:all 200ms}
+.note-item:hover{background:rgba(255,255,255,0.95);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.note-text{font-size:14px;line-height:1.6;color:var(--text);word-wrap:break-word;white-space:pre-wrap;margin-bottom:10px}
 .note-footer{display:flex;justify-content:space-between;align-items:center}
 .note-time{font-size:11px;color:var(--muted)}
 .note-delete{width:24px;height:24px;padding:4px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:6px;transition:all 150ms}
 .note-delete:hover{background:rgba(255,0,0,0.1);color:#d32f2f}
-.notes-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
+.notes-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
 
 @media (max-width:900px){.board{grid-template-columns:1fr}}
 </style>
@@ -645,20 +661,37 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
     <button class="icon-button" id="close-notes">✕</button>
   </div>
 
-  <div class="notes-tabs">
+  <div class="notes-sidebar">
     <button class="notes-tab active" data-tab="personal">Personal</button>
     <button class="notes-tab" data-tab="quick">Quick Thoughts</button>
     <button class="notes-tab" data-tab="context">Context</button>
     <button class="notes-tab" data-tab="reference">Reference</button>
+    <button class="notes-tab notes-add-tab" id="add-topic-btn">+ New Topic</button>
   </div>
 
-  <div class="notes-input-area">
-    <textarea id="notes-input" placeholder="Add a note..." rows="3" maxlength="500"></textarea>
-    <button class="btn primary" id="add-note-btn">Save</button>
-  </div>
+  <div class="notes-main">
+    <div class="notes-controls">
+      <div class="topic-select">
+        <button type="button" class="topic-button" id="topic-button">
+          <span class="selected-topic">Personal</span>
+        </button>
+        <div class="topic-dropdown" id="topic-dropdown">
+          <button class="topic-option" data-value="personal">Personal</button>
+          <button class="topic-option" data-value="quick">Quick Thoughts</button>
+          <button class="topic-option" data-value="context">Context</button>
+          <button class="topic-option" data-value="reference">Reference</button>
+        </div>
+      </div>
+      <textarea id="notes-input" class="notes-textarea" placeholder="Write your note here..." maxlength="1000"></textarea>
+      <div class="notes-actions">
+        <button class="btn" id="clear-note-btn">Clear</button>
+        <button class="btn primary" id="add-note-btn">Save Note</button>
+      </div>
+    </div>
 
-  <div class="notes-list" id="notes-list">
-    <!-- Notes will be rendered here -->
+    <div class="notes-list" id="notes-list">
+      <!-- Notes will be rendered here -->
+    </div>
   </div>
 </div>
 
@@ -1524,10 +1557,14 @@ const notesPanel=document.getElementById('notes-panel');
 const notesBackdrop=document.getElementById('notes-backdrop');
 const openNotesBtn=document.getElementById('open-notes');
 const closeNotesBtn=document.getElementById('close-notes');
-const notesTabs=document.querySelectorAll('.notes-tab');
+const notesTabs=document.querySelectorAll('.notes-tab:not(.notes-add-tab)');
 const notesInput=document.getElementById('notes-input');
 const addNoteBtn=document.getElementById('add-note-btn');
+const clearNoteBtn=document.getElementById('clear-note-btn');
 const notesList=document.getElementById('notes-list');
+const topicButton=document.getElementById('topic-button');
+const topicDropdown=document.getElementById('topic-dropdown');
+const selectedTopicSpan=topicButton.querySelector('.selected-topic');
 
 let notesState={
   personal:[],
@@ -1536,6 +1573,7 @@ let notesState={
   reference:[]
 };
 let currentNotesTab='personal';
+let selectedTopic='personal';
 
 function loadNotes(){
   try{
@@ -1560,12 +1598,22 @@ function saveNotes(){
 function openNotesPanel(){
   notesPanel.classList.add('active');
   notesBackdrop.classList.add('active');
-  notesInput.focus();
+  setTimeout(()=>notesInput.focus(),100);
 }
 
 function closeNotesPanel(){
   notesPanel.classList.remove('active');
   notesBackdrop.classList.remove('active');
+}
+
+function getTopicDisplayName(tabName){
+  const names={
+    personal:'Personal',
+    quick:'Quick Thoughts',
+    context:'Context',
+    reference:'Reference'
+  };
+  return names[tabName]||tabName;
 }
 
 function switchNotesTab(tabName){
@@ -1587,13 +1635,17 @@ function addNote(){
   const note={
     id:uid(),
     text:text,
-    timestamp:Date.now()
+    timestamp:Date.now(),
+    topic:selectedTopic
   };
 
-  notesState[currentNotesTab].unshift(note);
+  if(!notesState[selectedTopic])notesState[selectedTopic]=[];
+  notesState[selectedTopic].unshift(note);
   notesInput.value='';
   saveNotes();
-  renderNotes();
+  if(currentNotesTab===selectedTopic){
+    renderNotes();
+  }
 }
 
 function deleteNote(noteId){
@@ -1618,16 +1670,16 @@ function formatNoteTime(timestamp){
 }
 
 function renderNotes(){
-  const notes=notesState[currentNotesTab];
+  const notes=notesState[currentNotesTab]||[];
 
   if(notes.length===0){
-    notesList.innerHTML='<div class="notes-empty">No notes yet. Add your first note above!</div>';
+    notesList.innerHTML='<div class="notes-empty">No notes in this topic yet.</div>';
     return;
   }
 
   notesList.innerHTML=notes.map(note=>`
     <div class="note-item">
-      <div class="note-text">${note.text}</div>
+      <div class="note-text">${note.text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
       <div class="note-footer">
         <span class="note-time">${formatNoteTime(note.timestamp)}</span>
         <button class="note-delete" onclick="deleteNote('${note.id}')">
@@ -1641,24 +1693,59 @@ function renderNotes(){
   `).join('');
 }
 
+function updateTopicDropdown(){
+  topicDropdown.innerHTML=Object.keys(notesState).map(topic=>`
+    <button class="topic-option" data-value="${topic}">${getTopicDisplayName(topic)}</button>
+  `).join('');
+}
+
 openNotesBtn.addEventListener('click',openNotesPanel);
 closeNotesBtn.addEventListener('click',closeNotesPanel);
-notesBackdrop.addEventListener('click',closeNotesPanel);
+notesBackdrop.addEventListener('click',e=>{
+  if(e.target===notesBackdrop)closeNotesPanel();
+});
 
 notesTabs.forEach(tab=>{
   tab.addEventListener('click',()=>{
-    switchNotesTab(tab.dataset.tab);
+    if(tab.dataset.tab){
+      switchNotesTab(tab.dataset.tab);
+    }
   });
 });
 
+topicButton.addEventListener('click',e=>{
+  e.stopPropagation();
+  topicDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click',()=>{
+  topicDropdown.classList.remove('open');
+});
+
+topicDropdown.addEventListener('click',e=>{
+  if(e.target.classList.contains('topic-option')){
+    e.stopPropagation();
+    selectedTopic=e.target.dataset.value;
+    selectedTopicSpan.textContent=getTopicDisplayName(selectedTopic);
+    topicDropdown.classList.remove('open');
+  }
+});
+
 addNoteBtn.addEventListener('click',addNote);
+clearNoteBtn.addEventListener('click',()=>{
+  notesInput.value='';
+  notesInput.focus();
+});
+
 notesInput.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){
+    e.preventDefault();
     addNote();
   }
 });
 
 loadNotes();
+updateTopicDropdown();
 renderNotes();
 
 render();
