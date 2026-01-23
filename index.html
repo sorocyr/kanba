@@ -263,11 +263,11 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .calendar-task:hover{transform:scale(1.02);opacity:0.9}
 .calendar-task.from-board{opacity:0.7}
 
-.notes-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:9998;padding:40px}
-.notes-backdrop.active{display:flex}
+.notes-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:99998;padding:40px;pointer-events:none}
+.notes-backdrop.active{display:flex;pointer-events:auto}
 
-.notes-panel{position:relative;width:calc(50% - 40px);max-width:700px;height:calc(100vh - 80px);background:rgba(255,255,255,0.65);backdrop-filter:saturate(120%) blur(6px);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:none;opacity:0;transform:scale(0.95);transition:all 300ms cubic-bezier(0.4, 0, 0.2, 1)}
-.notes-panel.active{display:grid;grid-template-columns:140px 1fr;grid-template-rows:auto 1fr;opacity:1;transform:scale(1)}
+.notes-panel{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%) scale(0.95);width:calc(50% - 40px);max-width:700px;height:calc(100vh - 80px);background:rgba(255,255,255,0.65);backdrop-filter:saturate(120%) blur(6px);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:none;opacity:0;z-index:99999;transition:all 300ms cubic-bezier(0.4, 0, 0.2, 1)}
+.notes-panel.active{display:grid;grid-template-columns:140px 1fr;grid-template-rows:auto 1fr;opacity:1;transform:translate(-50%, -50%) scale(1)}
 
 .notes-header{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(0,0,0,0.06)}
 .notes-header h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-0.02em}
@@ -1598,12 +1598,14 @@ function saveNotes(){
 function openNotesPanel(){
   notesPanel.classList.add('active');
   notesBackdrop.classList.add('active');
+  document.body.style.overflow='hidden';
   setTimeout(()=>notesInput.focus(),100);
 }
 
 function closeNotesPanel(){
   notesPanel.classList.remove('active');
   notesBackdrop.classList.remove('active');
+  document.body.style.overflow='';
 }
 
 function getTopicDisplayName(tabName){
@@ -1699,10 +1701,20 @@ function updateTopicDropdown(){
   `).join('');
 }
 
-openNotesBtn.addEventListener('click',openNotesPanel);
-closeNotesBtn.addEventListener('click',closeNotesPanel);
+openNotesBtn.addEventListener('click',e=>{
+  e.preventDefault();
+  e.stopPropagation();
+  openNotesPanel();
+});
+closeNotesBtn.addEventListener('click',e=>{
+  e.preventDefault();
+  closeNotesPanel();
+});
 notesBackdrop.addEventListener('click',e=>{
-  if(e.target===notesBackdrop)closeNotesPanel();
+  if(e.target===notesBackdrop){
+    e.preventDefault();
+    closeNotesPanel();
+  }
 });
 
 notesTabs.forEach(tab=>{
