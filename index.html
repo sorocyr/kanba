@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f9f6ef;--text:#1b1b1f;--muted:#6f6f76;--card:#fff;--radius:14px;--ring:0 0 0 2px rgba(0,0,0,0.06);--design:258,100%,86%;--dev:174,70%,80%;--research:44,100%,84%;--bug:0,100%,82%;--chore:200,100%,85%}
+:root{--bg:#fefdf9;--text:#1b1b1f;--muted:#6f6f76;--card:#fff;--radius:14px;--ring:0 0 0 2px rgba(0,0,0,0.06);--design:258,100%,86%;--dev:174,70%,80%;--research:44,100%,84%;--bug:0,100%,82%;--chore:200,100%,85%}
 *{box-sizing:border-box;margin:0;padding:0}
 html{width:100%;height:100%;overflow:hidden}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
@@ -110,7 +110,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .legend-plus:hover{background:#fafafa}
 
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:9999}
-.modal{width:min(280px,92vw);background:#fff;border-radius:16px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.18);padding:18px}
+.modal{width:min(280px,92vw);background:rgba(254,253,249,0.65);border-radius:16px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.18);padding:18px;backdrop-filter:blur(8px)}
 .modal h3{margin:4px 0 28px 0;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:center}
 
 .modal .color-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
@@ -271,7 +271,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .notes-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.2);display:none;align-items:center;justify-content:center;z-index:99998;padding:40px;pointer-events:none}
 .notes-backdrop.active{display:flex;pointer-events:auto}
 
-.notes-panel{position:fixed;left:40px;top:40px;transform:scale(0.95);width:calc(50% - 40px);max-width:600px;height:calc(100vh - 80px);background:var(--bg);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:none;opacity:0;z-index:99999;transition:all 300ms cubic-bezier(0.4, 0, 0.2, 1)}
+.notes-panel{position:fixed;left:40px;top:40px;transform:scale(0.95);width:calc(50% - 40px);max-width:600px;height:calc(100vh - 80px);background:rgba(254,253,249,0.65);border:1px solid rgba(0,0,0,0.06);border-radius:var(--radius);box-shadow:0 8px 30px rgba(0,0,0,0.06);display:none;opacity:0;z-index:99999;transition:all 300ms cubic-bezier(0.4, 0, 0.2, 1);backdrop-filter:blur(8px)}
 .notes-panel.active{display:flex;flex-direction:column;opacity:1;transform:scale(1)}
 
 .notes-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(0,0,0,0.06)}
@@ -332,7 +332,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .topic-input-modal,.delete-confirm-modal{display:none;position:fixed;inset:0;z-index:100000;align-items:center;justify-content:center}
 .topic-input-modal.active,.delete-confirm-modal.active{display:flex}
 .topic-input-backdrop,.delete-confirm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(4px)}
-.topic-input-content,.delete-confirm-content{position:relative;background:var(--bg);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;min-width:400px;max-width:90vw;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
+.topic-input-content,.delete-confirm-content{position:relative;background:rgba(254,253,249,0.65);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;min-width:400px;max-width:90vw;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
 .topic-input-content h4,.delete-confirm-content h4{margin:0 0 16px 0;font-size:16px;font-weight:600;letter-spacing:-0.02em}
 .delete-confirm-content p{margin:0 0 20px 0;font-size:14px;line-height:1.5;color:var(--muted)}
 #topic-name-input{width:100%;height:40px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:0 12px;font-family:inherit;font-size:15px;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease;background:#fff;margin-bottom:16px}
@@ -344,8 +344,8 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .calendar-task-modal{display:none;position:fixed;inset:0;z-index:100000;align-items:center;justify-content:center}
 .calendar-task-modal.active{display:flex}
 .calendar-task-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(4px)}
-.calendar-task-content{position:relative;background:var(--bg);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;min-width:400px;max-width:90vw;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
-.calendar-task-content h4{margin:0 0 4px 0;font-size:16px;font-weight:600;letter-spacing:-0.02em}
+.calendar-task-content{position:relative;background:rgba(254,253,249,0.65);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;min-width:400px;max-width:90vw;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
+.calendar-task-content h4{margin:0 0 4px 0;font-size:14px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
 .calendar-task-date{margin:0 0 16px 0;font-size:13px;color:var(--muted)}
 #calendar-task-input{width:100%;height:40px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:0 12px;font-family:inherit;font-size:15px;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease;background:#fff;margin-bottom:12px}
 #calendar-task-input:focus{border-color:rgba(0,0,0,0.35);border-width:2px;padding:0 11px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
@@ -355,7 +355,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .calendar-task-category .category-button{width:100%;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);padding:0 32px 0 12px;background:#fff;cursor:pointer;text-align:left;font:inherit;position:relative;display:flex;align-items:center;font-size:15px}
 .calendar-task-category .category-button:hover{background-color:#fafafa}
 .calendar-task-category .category-button::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--muted)}
-.calendar-task-category .category-dropdown{position:absolute;top:40px;left:0;width:100%;background:#f8f8f8;border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;z-index:100;overflow:hidden;padding:8px 4px}
+.calendar-task-category .category-dropdown{position:absolute;top:40px;left:0;width:100%;background:#f8f8f8;border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;z-index:100001;overflow:hidden;padding:8px 4px}
 .calendar-task-category .category-dropdown.open{display:block}
 .calendar-task-category .category-option{padding:8px 12px;cursor:pointer;transition:all 200ms ease;border-radius:6px;margin:2px 0;background:transparent;color:var(--text);border:none;width:100%;text-align:left;font:inherit;font-size:15px}
 .calendar-task-category .category-option:hover{background:rgba(0,0,0,0.08)}
@@ -382,16 +382,16 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 .time-picker-modal{display:none;position:fixed;inset:0;z-index:100001;align-items:center;justify-content:center}
 .time-picker-modal.active{display:flex}
 .time-picker-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(4px)}
-.time-picker-content{position:relative;background:var(--bg);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;width:320px;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
-.time-picker-content h4{margin:0 0 16px 0;font-size:16px;font-weight:600;letter-spacing:-0.02em;text-align:center}
-.time-picker-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;height:200px;position:relative}
+.time-picker-content{position:relative;background:rgba(254,253,249,0.65);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.15);padding:24px;width:320px;animation:modalSlideIn 200ms cubic-bezier(0.4, 0, 0.2, 1)}
+.time-picker-content h4{margin:0 0 8px 0;font-size:16px;font-weight:600;letter-spacing:-0.02em;text-align:center}
+.time-picker-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:24px 0 8px 0;height:200px;position:relative}
 .time-picker-columns::before{content:'';position:absolute;left:0;right:0;top:50%;height:40px;transform:translateY(-50%);background:rgba(0,0,0,0.04);border-radius:10px;pointer-events:none;z-index:1}
 .time-column{height:100%;overflow:hidden;position:relative}
 .time-column-scroll{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;padding:80px 0;scrollbar-width:none}
 .time-column-scroll::-webkit-scrollbar{display:none}
 .time-option{height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;color:var(--muted);scroll-snap-align:center;cursor:pointer;transition:all 200ms}
 .time-option.active{color:var(--text);font-size:20px;font-weight:600}
-.time-picker-actions{display:flex;justify-content:center;gap:8px}
+.time-picker-actions{display:flex;justify-content:center;gap:8px;margin-top:80px}
 
 @keyframes modalSlideIn{
   from{opacity:0;transform:scale(0.95)}
@@ -818,7 +818,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
 <div class="calendar-task-modal" id="calendar-task-modal">
   <div class="calendar-task-backdrop"></div>
   <div class="calendar-task-content">
-    <h4>Add an Event</h4>
+    <h4>ADD AN EVENT</h4>
     <p class="calendar-task-date" id="calendar-task-date">January 1, 2026</p>
     <input type="text" id="calendar-task-input" placeholder="Enter your event title" maxlength="200">
     <div class="calendar-task-category">
@@ -890,7 +890,7 @@ body{width:100%;height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-s
     </div>
     <div class="time-picker-actions">
       <button class="btn" id="cancel-time-btn">Cancel</button>
-      <button class="btn primary" id="confirm-time-btn">Confirm</button>
+      <button class="btn primary" id="confirm-time-btn">Save</button>
     </div>
   </div>
 </div>
@@ -1921,7 +1921,7 @@ function showTimePicker(target){
   const currentTime=target==='start'?selectedStartTime:selectedEndTime;
 
   // Set default or current values
-  let hour=9,minute=0,ampm='AM';
+  let hour=1,minute=0,ampm='AM';
   if(currentTime){
     const parts=currentTime.split(':');
     const h=parseInt(parts[0]);
@@ -1931,13 +1931,15 @@ function showTimePicker(target){
     ampm=h>=12?'PM':'AM';
   }
 
-  // Scroll to current values
-  scrollToTimeValue(hourScroll,hour.toString());
-  scrollToTimeValue(minuteScroll,minute.toString().padStart(2,'0'));
-  scrollToTimeValue(ampmScroll,ampm);
-
   timePickerModal.classList.add('active');
-  setTimeout(updateTimePickerActive,100);
+
+  // Scroll to current values after modal is visible
+  setTimeout(()=>{
+    scrollToTimeValue(hourScroll,hour.toString());
+    scrollToTimeValue(minuteScroll,minute.toString().padStart(2,'0'));
+    scrollToTimeValue(ampmScroll,ampm);
+    updateTimePickerActive();
+  },50);
 }
 
 function hideTimePicker(){
@@ -2009,28 +2011,6 @@ function confirmTime(){
 
   hideTimePicker();
 }
-
-// Category dropdown handling
-calendarCategoryButton.addEventListener('click',e=>{
-  e.preventDefault();
-  e.stopPropagation();
-  const wasOpen=calendarCategoryDropdown.classList.contains('open');
-  document.querySelectorAll('.category-dropdown').forEach(d=>d.classList.remove('open'));
-  if(!wasOpen){
-    calendarCategoryDropdown.classList.add('open');
-  }
-});
-
-calendarCategoryDropdown.addEventListener('click',e=>{
-  e.preventDefault();
-  e.stopPropagation();
-  if(e.target.classList.contains('category-option')){
-    const value=e.target.dataset.value;
-    calendarCategoryButton.dataset.selectedCategory=value;
-    calendarCategoryButton.querySelector('.selected-category').textContent=e.target.textContent;
-    calendarCategoryDropdown.classList.remove('open');
-  }
-});
 
 // Time picker event handlers
 startTimeBox.addEventListener('click',()=>showTimePicker('start'));
